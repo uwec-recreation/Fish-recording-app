@@ -9,11 +9,30 @@
   <body>
     <div class="Navigation-Bar">
       <ul>
-        <li><a href="default.asp">Home</a></li>
-        <li><a href="news.asp">News</a></li>
-        <li><a href="contact.asp">Contact</a></li>
-        <li><a href="about.asp">About</a></li>
+        <li class="active" name="home"><a href="">Home</a></li>
+        <li name="help"><a href="">Help</a></li>
+        <li name="rules"><a href="">Rules</a></li>
+        <li style="float:right" name="register"><a href="news.asp">Register</a></li>
+        <li class="active" style="float:right" name="login"><a href="">Login</a></li>
       </ul>
+    </div>
+
+    <div class="contestant-input">
+      <form>
+        <div class="inputSpot"><p>Ticket Number:</p><input type="text" name="ticketNumber" autofocus></div>
+        <div class="inputSpot"><p>First Name:</p><input type="text" name="ticketNumber"></div>
+        <div class="inputSpot"><p>Last Name:</p><input type="text" name="ticketNumber"></div>
+        <div class="inputSpot"><p>Fish Species:</p><select>
+          <option value="none"></option>
+          <option value="fish1">Fish1</option>
+          <option value="fish2">Fish2</option>
+          <option value="fish3">Fish3</option>
+          <option value="fish4">Fish4</option>
+        </select></div>
+        <div class="inputSpot"><p>Weight (lb):</p><input type="text" name="ticketNumber"></div>
+
+        <button type="submit">Submit</button>
+      </form>
     </div>
   </body>
 </html>

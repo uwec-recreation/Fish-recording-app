@@ -1,16 +1,107 @@
+* {
+  font-family: "helvetica";
+}
 ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 60px;
+  position: fixed;
+  width: 100%;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #444;
 }
 
 li {
   float: left;
+  border-right: 1px solid #bbb;
 }
 
-a {
+li a {
     display: block;
-    padding: 8px;
-    background-color: #dddddd;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li:last-child {
+    border-right: none;
+}
+
+li a:hover {
+  background-color: #111;
+}
+
+.navigation-bar {
+  float: left;
+}
+
+.login li {
+  float: right;
+}
+
+.active {
+    background-color: #3171d8;
+}
+
+.contestant-input {
+  position: relative;
+  background-color: #AAA;
+  top: 100px;
+  margin: auto;
+  width: 50%;
+  text-align: center;
+  padding: 3% 20% 3% 20%;
+}
+
+.contestant-input input {
+  border: none;
+  padding: 5px;
+  flex-grow: 1;
+  width: 15em;
+  font-weight: bold;
+  font-size: 100%;
+}
+
+.contestant-input select {
+  border: none;
+  width: 15em;
+  padding: 5px;
+  flex-grow: 1;
+  font-weight: bold;
+  font-size: 100%;
+}
+
+.contestant-input p {
+  width: 100%;
+  margin: 0 auto 0 auto;
+  color: #FFF;
+  font-weight: bold;
+  font-size: 150%;
+}
+
+.inputSpot {
+  display: inline-block;
+  background-color: #111;
+  width: 100%;
+  margin: 3px;
+  padding: 1em;
+}
+
+.contestant-input button {
+  border: none;
+  background: #3171d8;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 200%;
+  transition: background .3s ease;
+}
+
+.contestant-input button:hover {
+  border: none;
+  background: #265f82;
+  color: white;
+  padding: 10px;
 }
