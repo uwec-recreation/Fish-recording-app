@@ -1,38 +1,41 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <meta charset="utf-8">
-    <title>Contestant Recorder | JigsUp</title>
-
-    <link rel = "stylesheet" type = "text/css" href = "css/style.css"/>
+    <title>Join | ChatApp</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="/css/styles.css">
   </head>
   <body>
-    <div class="Navigation-Bar">
+    <div class="navigation-bar">
       <ul>
-        <li class="active" name="home"><a href="">Home</a></li>
-        <li name="help"><a href="">Help</a></li>
+        <li name="jigsUp"><a href="">JigsUp</a></li>
+        <li name="adminChat"><a href="">Admin Chat</a></li>
         <li name="rules"><a href="">Rules</a></li>
-        <li style="float:right" name="register"><a href="news.asp">Register</a></li>
-        <li class="active" style="float:right" name="login"><a href="">Login</a></li>
       </ul>
     </div>
 
-    <div class="contestant-input">
-      <form>
-        <div class="inputSpot"><p>Ticket Number:</p><input type="text" name="ticketNumber" autofocus></div>
-        <div class="inputSpot"><p>First Name:</p><input type="text" name="ticketNumber"></div>
-        <div class="inputSpot"><p>Last Name:</p><input type="text" name="ticketNumber"></div>
-        <div class="inputSpot"><p>Fish Species:</p><select>
-          <option value="none"></option>
-          <option value="fish1">Fish1</option>
-          <option value="fish2">Fish2</option>
-          <option value="fish3">Fish3</option>
-          <option value="fish4">Fish4</option>
-        </select></div>
-        <div class="inputSpot"><p>Weight (lb):</p><input type="text" name="ticketNumber"></div>
-
-        <button type="submit">Submit</button>
-      </form>
+    <div class="centered-form">
+      <div class="centered-form__form">
+        <form action="/ticket.html">
+          <div class="form-field">
+            <h3>Fish Recording</h3>
+          </div>
+          <div class="form-field">
+            <label>Username</label>
+            <input type="text" name="username" autofocus/>
+          </div>
+          <div class="form-field">
+            <label>Password</label>
+            <input type="text" name="password"/>
+          </div>
+          <div class="form-field">
+            <button>Connect</button>
+          </div>
+        </form>
+      </div>
     </div>
   </body>
+
 </html>

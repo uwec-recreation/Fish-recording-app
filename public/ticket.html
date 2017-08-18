@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Contestant Recorder | JigsUp</title>
+
+    <link rel = "stylesheet" type = "text/css" href = "css/styles.css"/>
+  </head>
+  <body>
+
+    <div class="navigation-bar">
+      <ul>
+        <li name="jigsUp"><a href="">JigsUp</a></li>
+        <li name="adminChat"><a href="">Admin Chat</a></li>
+        <li name="rules"><a href="">Rules</a></li>
+        <li style="float:right" name="logout"><a href="index.html">Logout</a></li>
+
+        <script id="user" type="text/temaplate">
+          <li style="float:right" name="user">{{user}}</li>
+        </script>
+
+      </ul>
+    </div>
+
+    <div class="centered-form">
+      <div class="centered-form__form">
+        <form action="/ticket.html" method="POST">
+          <div class="form-field">
+            <h3>Angler Data</h3>
+          </div>
+          <div class="form-field">
+            <label>Ticket Number</label>
+            <input type="text" name="ticketNumber" autofocus>
+          </div>
+          <div class="form-field">
+            <label>First Name</label>
+            <input type="text" name="firstName" autofocus>
+          </div>
+          <div class="form-field">
+            <label>Last Name</label>
+            <input type="text" name="lastName" autofocus>
+          </div>
+
+          <div class="form-field">
+            <label>Fish Species</label>
+            <select>
+              <option value="none"></option>
+              <option value="fish1">Fish1</option>
+              <option value="fish2">Fish2</option>
+              <option value="fish3">Fish3</option>
+              <option value="fish4">Fish4</option>
+            </select></div>
+          <div class="form-field">
+            <label>Weight (lb)</label>
+            <input type="text" name="ticketNumber">
+          </div>
+          <div class="form-field">
+            <button type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
