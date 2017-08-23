@@ -4,6 +4,8 @@ const path = require('path');
 const _ = require('lodash');
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const hbs = require('hbs');
 const {ObjectID} = require('mongodb');
 
 var {mongoose} = require('./db/mongoose');
@@ -12,11 +14,65 @@ var {User} = require('./models/user');
 var {authenticate} = require('./middleware/authenticate');
 
 const publicPath = path.join(__dirname, '../public');
+const partialsViewsPath = path.join(__dirname, '../views/partials');
 var app = express();
+hbs.registerPartials(partialsViewsPath);
 var port = process.env.PORT;
 
 app.use(bodyParser.json());
 app.use(express.static(publicPath));
+app.set('view engine', 'hbs');
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.get('/', (req, res) => {
+  res.redirect('/login');
+});
+
+app.get('/login', (req, res) => {
+  res.render('index.hbs');
+});
+
+app.get('/ticket', (req, res) => {
+  res.render('ticket.hbs');
+});
+
+app.post('/users', async (req,res) => {
+  try {
+    const body = _.pick(req.body, ['email', 'password']);
+    const user = new User(body);
+    await user.save();
+    const token = await user.generateAuthToken();
+    res.cookie('x-auth', token).redirect('/');
+  } catch (e) {
+    res.status(400).send(e);
+  }
+});
+
+app.get('/users/me', authenticate, (req, res) => {
+  res.send(req.user);
+});
+
+app.post('/users/login', async (req, res) => {
+  try {
+    const body = _.pick(req.body, ['email', 'password']);
+    const user = await User.findByCredentials(body.email, body.password);
+    const token = await user.generateAuthToken();
+    res.header('x-auth', token).send(user);
+  } catch (e) {
+    res.status(400).send();
+  }
+});
+
+app.delete('/users/me/token', authenticate, async (req, res) => {
+  try {
+    await req.user.removeToken(req.token);
+    res.status(200).send();
+  } catch(e) {
+    res.status(400).send();
+  }
+});
+
 
 app.post('/todos', authenticate, (req, res) => {
   var todo = new Todo({
@@ -106,41 +162,6 @@ app.patch('/todos/:id', authenticate, (req, res) => {
   })
 });
 
-app.post('/users', async (req,res) => {
-  try {
-    const body = _.pick(req.body, ['email', 'password']);
-    const user = new User(body);
-    await user.save();
-    const token = await user.generateAuthToken();
-    res.header('x-auth', token).send(user);
-  } catch (e) {
-    res.status(400).send(e);
-  }
-});
-
-app.get('/users/me', authenticate, (req, res) => {
-  res.send(req.user);
-});
-
-app.post('/users/login', async (req, res) => {
-  try {
-    const body = _.pick(req.body, ['email', 'password']);
-    const user = await User.findByCredentials(body.email, body.password);
-    const token = await user.generateAuthToken();
-    res.header('x-auth', token).send(user);
-  } catch (e) {
-    res.status(400).send();
-  }
-});
-
-app.delete('/users/me/token', authenticate, async (req, res) => {
-  try {
-    await req.user.removeToken(req.token);
-    res.status(200).send();
-  } catch(e) {
-    res.status(400).send();
-  }
-});
 
 app.listen(port, () => {
   console.log(`Started on port ${port}`);
