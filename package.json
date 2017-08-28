@@ -21,6 +21,7 @@
     "lodash": "^4.17.4",
     "mongodb": "^2.2.31",
     "mongoose": "^4.11.7",
+    "mongoose-double": "0.0.1",
     "validator": "^8.0.0"
   },
   "devDependencies": {
