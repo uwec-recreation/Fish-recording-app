@@ -73,10 +73,20 @@ app.post('/users/login', async (req, res) => {
 });
 
 app.get('/ticket', authenticate, (req, res) => {
-  res.render('ticket.hbs', {
-    title: 'ticket | JigsUp',
-    username: req.user.username
-  });
+  console.log(res.status);
+  if(res.status === 400) {
+    res.render('ticket.hbs', {
+      title: 'ticket | JigsUp',
+      username: req.user.username,
+      error: true
+    });
+  } else {
+    res.render('ticket.hbs', {
+      title: 'ticket | JigsUp',
+      username: req.user.username,
+      error: false
+    });
+  }
 });
 
 app.post('/users', async (req,res) => {
@@ -96,10 +106,11 @@ app.get('/users/me', authenticate, (req, res) => {
 });
 
 app.post('/contestants', authenticate, (req, res) => {
+
   var contestant = new Contestant({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
-    ticket: req.body.ticketNumber,
+    ticket: parseInt(req.body.ticketNumber, 10),
     fish: req.body.fish,
     weight: req.body.weight,
     _creator: req.user._id
@@ -108,7 +119,7 @@ app.post('/contestants', authenticate, (req, res) => {
   contestant.save().then(() => {
     res.redirect('/ticket');
   }, (e) => {
-    res.status(400).send(e);
+    res.redirect(400, '/ticket');
   });
 });
 

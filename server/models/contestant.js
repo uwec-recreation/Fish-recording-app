@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-require('mongoose-double')(mongoose);
+const validator = require('validator');
 
 var ContestantSchema = new mongoose.Schema( {
   firstName: {
@@ -26,8 +26,12 @@ var ContestantSchema = new mongoose.Schema( {
     trim: true
   },
   weight: {
-    type: mongoose.Schema.Types.Double,
-    required: true
+    type: String,
+    required: true,
+    validate: {
+      validator: validator.isDecimal,
+      message: '{VALUE} is not a valid decimal'
+    }
   },
   createdAt: {
     type: Number,

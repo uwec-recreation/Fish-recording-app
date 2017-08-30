@@ -6,9 +6,12 @@
           <div class="form-field">
             <h3>Angler Data</h3>
           </div>
+          {{#if error}}
+          <label style="color:red">Something went wrong</label>
+          {{/if}}
           <div class="form-field">
             <label>Ticket Number</label>
-            <input type="number" name="ticketNumber" autocomplete="off" autofocus>
+            <input type="text" name="ticketNumber" autocomplete="off" autofocus>
           </div>
           <div class="form-field">
             <label>First Name</label>
@@ -30,7 +33,7 @@
             </select></div>
           <div class="form-field">
             <label>Weight (lb)</label>
-            <input type="number" step=.01 autocomplete="off" name="ticketNumber">
+            <input type="text" autocomplete="off" name="weight">
           </div>
           <div class="form-field">
             <button type="submit">Submit</button>
