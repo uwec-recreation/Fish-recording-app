@@ -72,21 +72,38 @@ app.post('/users/login', async (req, res) => {
   }
 });
 
+renderTicket = (req, res, info) => {
+  data = {
+    title: 'ticket | JigsUp',
+    username: req.user.username
+  };
+  _.merge(data, info);
+  console.log(data);
+  res.render('ticket.hbs',data);
+}
+
 app.get('/ticket', authenticate, (req, res) => {
-  console.log(res.status);
-  if(res.status === 400) {
-    res.render('ticket.hbs', {
-      title: 'ticket | JigsUp',
-      username: req.user.username,
-      error: true
-    });
-  } else {
-    res.render('ticket.hbs', {
-      title: 'ticket | JigsUp',
-      username: req.user.username,
-      error: false
-    });
-  }
+
+  renderTicket(req, res);
+});
+
+app.post('/ticket', authenticate, (req, res) => {
+
+  var contestant = new Contestant({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    ticket: parseInt(req.body.ticketNumber, 10),
+    fish: req.body.fish,
+    weight: req.body.weight,
+    _creator: req.user._id
+  });
+
+  contestant.save().then(() => {
+    renderTicket(req, res);
+  }, (e) => {
+    console.log("error");
+    renderTicket(req, res, {error:'you done messed up the program'});
+  });
 });
 
 app.post('/users', async (req,res) => {

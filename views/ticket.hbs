@@ -2,12 +2,12 @@
 
     <div class="centered-form">
       <div class="centered-form__form">
-        <form action="/contestants" method="POST">
+        <form action="/ticket" method="POST">
           <div class="form-field">
             <h3>Angler Data</h3>
           </div>
           {{#if error}}
-          <label style="color:red">Something went wrong</label>
+          <label style="color:red">{{error}}</label>
           {{/if}}
           <div class="form-field">
             <label>Ticket Number</label>

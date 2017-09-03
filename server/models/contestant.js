@@ -26,12 +26,8 @@ var ContestantSchema = new mongoose.Schema( {
     trim: true
   },
   weight: {
-    type: String,
-    required: true,
-    validate: {
-      validator: validator.isDecimal,
-      message: '{VALUE} is not a valid decimal'
-    }
+    type: Number,
+    required: true
   },
   createdAt: {
     type: Number,
