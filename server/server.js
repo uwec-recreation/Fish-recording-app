@@ -102,7 +102,7 @@ app.post('/ticket', authenticate, (req, res) => {
     renderTicket(req, res);
   }, (e) => {
     console.log("error");
-    renderTicket(req, res, {error:'you done messed up the program'});
+    renderTicket(req, res, {error:'you done goofed'});
   });
 });
 
@@ -120,24 +120,6 @@ app.post('/users', async (req,res) => {
 
 app.get('/users/me', authenticate, (req, res) => {
   res.send(req.user);
-});
-
-app.post('/contestants', authenticate, (req, res) => {
-
-  var contestant = new Contestant({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    ticket: parseInt(req.body.ticketNumber, 10),
-    fish: req.body.fish,
-    weight: req.body.weight,
-    _creator: req.user._id
-  });
-
-  contestant.save().then(() => {
-    res.redirect('/ticket');
-  }, (e) => {
-    res.redirect(400, '/ticket');
-  });
 });
 
 app.get('/contestants', authenticate, (req, res) => {
