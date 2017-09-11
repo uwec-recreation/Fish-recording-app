@@ -30,7 +30,7 @@ var ContestantSchema = new mongoose.Schema( {
     required: true
   },
   createdAt: {
-    type: Number,
+    type: Date,
     default: null
   },
   _creator: {

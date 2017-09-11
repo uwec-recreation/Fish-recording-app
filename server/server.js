@@ -29,6 +29,14 @@ app.get('/', (req, res) => {
   res.redirect('/login');
 });
 
+
+
+////////////TICKET////////////
+
+
+
+
+////////////LOGIN////////////
 app.get('/login', getUser,(req, res) => {
   if(req.user) {
     res.redirect('/ticket');
@@ -39,6 +47,23 @@ app.get('/login', getUser,(req, res) => {
   });
 });
 
+
+app.post('/login', async (req, res) => {
+  try {
+    const body = _.pick(req.body, ['username', 'password']);
+    const user = await User.findByCredentials(body.username, body.password);
+    const token = await user.generateAuthToken();
+    await res.cookie('x-auth', token);
+    res.redirect('/ticket');
+  } catch (e) {
+    res.status(400).redirect('/login');
+  }
+});
+
+
+
+
+////////////REGISTER////////////
 app.get('/register', getUser, (req, res) => {
 
   if(req.user) {
@@ -57,18 +82,6 @@ app.get('/logout', authenticate, async (req, res) => {
     res.status(200).redirect('/');
   } catch(e) {
     res.status(400).send();
-  }
-});
-
-app.post('/users/login', async (req, res) => {
-  try {
-    const body = _.pick(req.body, ['username', 'password']);
-    const user = await User.findByCredentials(body.username, body.password);
-    const token = await user.generateAuthToken();
-    await res.cookie('x-auth', token);
-    res.redirect('/ticket');
-  } catch (e) {
-    res.status(400).redirect('/login');
   }
 });
 
