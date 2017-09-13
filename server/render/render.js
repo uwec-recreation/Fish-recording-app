@@ -1,37 +1,40 @@
 const _ = require('lodash');
 const express = require('express');
 
-login = (req, res, {info}) => {
+login = (req, res, info) => {
   data = {
-    pageTitle: 'Login | Serenity'
+    pageTitle: 'Login | JigsUp'
   };
   _.merge(data, info);
   res.render('login.hbs', data);
 };
 
-ticket = (req, res, {info}) => {
+ticket = (req, res, info) => {
   data = {
-    pageTitle: 'Ticket | Serenity'
+    pageTitle: 'Ticket | JigsUp',
+    username: req.user.username
   };
   _.merge(data, info);
   res.render('ticket.hbs', data);
 };
 
-confirmation = (req, res, {info}) => {
+register = (req, res, info) => {
   data = {
-    pageTitle: 'Confirmation | Serenity'
+    pageTitle: 'Register | JigsUp',
+    username: req.user.username
   };
   _.merge(data, info);
-  res.render('confirmation.hbs', data);
+  res.render('register.hbs', data);
 };
 
-data = (req, res, {info}) => {
+data = (req, res, info) => {
   data = {
-    pageTitle: 'Data | Serenity'
+    pageTitle: 'Data | JigsUp',
+    username: req.user.username
   };
   _.merge(data, info);
   res.render('data.hbs', data);
 };
 
 
-module.exports = {login, ticket, confirmation, data};
+module.exports = {login, ticket, register, data};

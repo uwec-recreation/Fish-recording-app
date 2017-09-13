@@ -1,11 +1,15 @@
 {{> header}}
     <div class="centered-form">
       <div class="centered-form__form">
-        <form action="/users" method="POST">
+        <form action="/register" method="POST">
 
           <div class="form-field">
             <h3>Register</h3>
           </div>
+
+          {{#if error}}
+          <label class="message" style="color:red">{{error}}</label>
+          {{/if}}
 
           <div class="form-field">
             <label>Username</label>

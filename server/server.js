@@ -12,6 +12,7 @@ var {mongoose} = require('./db/mongoose');
 var {Contestant} = require('./models/contestant');
 var {User} = require('./models/user');
 var {authenticate, getUser} = require('./middleware/authenticate');
+var render = require('./render/render');
 
 const publicPath = path.join(__dirname, '../public');
 const partialsViewsPath = path.join(__dirname, '../views/partials');
@@ -33,6 +34,28 @@ app.get('/', (req, res) => {
 
 ////////////TICKET////////////
 
+app.get('/ticket', authenticate, (req, res) => {
+
+  render.ticket(req, res);
+});
+
+app.post('/ticket', authenticate, (req, res) => {
+
+  var contestant = new Contestant({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    ticket: parseInt(req.body.ticketNumber, 10),
+    fish: req.body.fish,
+    weight: req.body.weight,
+    _creator: req.user._id
+  });
+
+  contestant.save().then(() => {
+    render.ticket(req, res, {confirmation: 'Angler Successfully Added'});
+  }, (e) => {
+    render.ticket(req, res, {error:'you done goofed'});
+  });
+});
 
 
 
@@ -42,24 +65,22 @@ app.get('/login', getUser,(req, res) => {
     res.redirect('/ticket');
   }
 
-  res.render('index.hbs', {
-    title: 'Login | JigsUp'
-  });
+  render.login(req, res, {});
 });
 
 
 app.post('/login', async (req, res) => {
   try {
     const body = _.pick(req.body, ['username', 'password']);
+    body.username = body.username.toLowerCase();
     const user = await User.findByCredentials(body.username, body.password);
     const token = await user.generateAuthToken();
     await res.cookie('x-auth', token);
     res.redirect('/ticket');
   } catch (e) {
-    res.status(400).redirect('/login');
+    render.login(req, res, 'Login Attempt Failed');
   }
 });
-
 
 
 
@@ -75,6 +96,25 @@ app.get('/register', getUser, (req, res) => {
   });
 });
 
+
+app.post('/register', async (req,res) => {
+  try {
+    const body = _.pick(req.body, ['username', 'password']);
+    body.username = body.username.toLowerCase();
+    const user = new User(body);
+    await user.save();
+    const token = await user.generateAuthToken();
+    res.cookie('x-auth', token);
+    render.login(req, res, {register: 'Registration Successful'});
+  } catch (e) {
+    render.register(req, res, {error: 'Registration Failed'});
+  }
+});
+
+
+
+////////////LOGOUT////////////
+
 app.get('/logout', authenticate, async (req, res) => {
   try {
     await req.user.removeToken(req.token);
@@ -85,51 +125,20 @@ app.get('/logout', authenticate, async (req, res) => {
   }
 });
 
-renderTicket = (req, res, info) => {
-  data = {
-    title: 'ticket | JigsUp',
-    username: req.user.username
-  };
-  _.merge(data, info);
-  console.log(data);
-  res.render('ticket.hbs',data);
-}
 
-app.get('/ticket', authenticate, (req, res) => {
 
-  renderTicket(req, res);
-});
+////////////DATA////////////
 
-app.post('/ticket', authenticate, (req, res) => {
 
-  var contestant = new Contestant({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    ticket: parseInt(req.body.ticketNumber, 10),
-    fish: req.body.fish,
-    weight: req.body.weight,
-    _creator: req.user._id
-  });
 
-  contestant.save().then(() => {
-    renderTicket(req, res);
-  }, (e) => {
-    console.log("error");
-    renderTicket(req, res, {error:'you done goofed'});
-  });
-});
 
-app.post('/users', async (req,res) => {
-  try {
-    const body = _.pick(req.body, ['username', 'password']);
-    const user = new User(body);
-    await user.save();
-    const token = await user.generateAuthToken();
-    res.cookie('x-auth', token).redirect('/ticket');
-  } catch (e) {
-    res.status(400).send(e);
-  }
-});
+
+
+
+
+
+////////////////////////////
+
 
 app.get('/users/me', authenticate, (req, res) => {
   res.send(req.user);

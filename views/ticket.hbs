@@ -7,7 +7,11 @@
             <h3>Angler Data</h3>
           </div>
           {{#if error}}
-          <label style="color:red">{{error}}</label>
+          <label class="message" style="color:red">{{error}}</label>
+          {{/if}}
+
+          {{#if confirmation}}
+          <label class="message" style="color:green">{{confirmation}}</label>
           {{/if}}
           <div class="form-field">
             <label>Ticket Number</label>

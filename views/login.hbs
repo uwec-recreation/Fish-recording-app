@@ -3,8 +3,16 @@
       <div class="centered-form__form">
         <form action="/login" method="POST">
           <div class="form-field">
-            <h3>Fish Recording</h3>
+            <h3>Login</h3>
           </div>
+
+          {{#if register}}
+          <label class="message" style="color:green">{{register}}</label>
+          {{/if}}
+          {{#if error}}
+          <label class="message" style="color:red">{{error}}</label>
+          {{/if}}
+
           <div class="form-field">
             <label>Username</label>
             <input type="text" name="username" autofocus/>

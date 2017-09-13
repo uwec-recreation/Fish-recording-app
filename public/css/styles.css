@@ -30,6 +30,13 @@ ul, li {
   float: right;
 }
 
+.message {
+  display: block;
+  text-align: center;
+  font-weight: bold;
+  width: 100%;
+}
+
 .centered-form {
   display: flex;
   align-items: center;
