@@ -27,14 +27,14 @@ register = (req, res, info) => {
   res.render('register.hbs', data);
 };
 
-data = (req, res, info) => {
+list = (req, res, info) => {
   data = {
-    pageTitle: 'Data | JigsUp',
+    pageTitle: 'List | JigsUp',
     username: req.user.username
   };
   _.merge(data, info);
-  res.render('data.hbs', data);
+  res.render('list.hbs', data);
 };
 
 
-module.exports = {login, ticket, register, data};
+module.exports = {login, ticket, register, list};

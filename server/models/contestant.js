@@ -31,7 +31,7 @@ var ContestantSchema = new mongoose.Schema( {
   },
   createdAt: {
     type: Date,
-    default: null
+    default: Date.now()
   },
   _creator: {
     type: mongoose.Schema.Types.ObjectId,

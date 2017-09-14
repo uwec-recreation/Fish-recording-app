@@ -127,8 +127,16 @@ app.get('/logout', authenticate, async (req, res) => {
 
 
 
-////////////DATA////////////
+////////////LIST////////////
 
+app.get('/list', authenticate, async (req, res) => {
+
+  data = await Contestant.find({});
+
+  render.list(req, res, {data});
+
+
+});
 
 
 

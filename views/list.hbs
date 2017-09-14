@@ -1,0 +1,29 @@
+{{> headerList}}
+    <div class="centered-form">
+      <div class="centered-tab">
+        <table class="list" style="width:100%">
+          <tr>
+            <!-- <caption>Registered Fish</caption> -->
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Ticket Number</th>
+            <th>Fish</th>
+            <th>Weight</th>
+            <th>Time</th>
+          </tr>
+          {{#each data}}
+          <tr>
+            <td>{{firstName}}</td>
+            <td>{{lastName}}</td>
+            <td>{{ticket}}</td>
+            <td>{{fish}}</td>
+            <td>{{weight}}</td>
+            <td>{{createdAt}}</td>
+          </tr>
+          {{/each}}
+        </table>
+      </div>
+    </div>
+  </body>
+
+</html>
