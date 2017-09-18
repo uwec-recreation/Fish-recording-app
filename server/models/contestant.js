@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
 const validator = require('validator');
+require('mongoose-moment')(mongoose);
+var Moment = require('moment');
 
 var ContestantSchema = new mongoose.Schema( {
   firstName: {
@@ -30,8 +32,7 @@ var ContestantSchema = new mongoose.Schema( {
     required: true
   },
   createdAt: {
-    type: Date,
-    default: Date.now()
+    type: 'Moment'
   },
   _creator: {
     type: mongoose.Schema.Types.ObjectId,

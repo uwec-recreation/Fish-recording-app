@@ -1,6 +1,8 @@
 {{> headerList}}
     <div class="centered-form">
       <div class="centered-tab">
+        <script src="/js/libs/moment.js"></script>
+        <script src="/js/libs/jquery-3.2.1.min.js"></script>
         <table class="list" style="width:100%">
           <tr>
             <!-- <caption>Registered Fish</caption> -->
@@ -18,12 +20,20 @@
             <td>{{ticket}}</td>
             <td>{{fish}}</td>
             <td>{{weight}}</td>
-            <td>{{createdAt}}</td>
+            <td>
+              <script>
+                 var str = moment({{createdAt}}).format('h:mm:ss A');
+                 $("td:last").html(str);
+              </script>
+            </td>
           </tr>
           {{/each}}
         </table>
       </div>
     </div>
+
+
+
   </body>
 
 </html>

@@ -6,6 +6,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const hbs = require('hbs');
+const Moment = require('moment');
 const {ObjectID} = require('mongodb');
 
 var {mongoose} = require('./db/mongoose');
@@ -47,6 +48,7 @@ app.post('/ticket', authenticate, (req, res) => {
     ticket: parseInt(req.body.ticketNumber, 10),
     fish: req.body.fish,
     weight: req.body.weight,
+    createdAt: new Moment().valueOf(),
     _creator: req.user._id
   });
 
@@ -131,7 +133,7 @@ app.get('/logout', authenticate, async (req, res) => {
 
 app.get('/list', authenticate, async (req, res) => {
 
-  data = await Contestant.find({});
+  data = await Contestant.find({}).sort({createdAt: -1});
 
   render.list(req, res, {data});
 
