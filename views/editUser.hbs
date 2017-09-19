@@ -1,0 +1,38 @@
+{{> header}}
+    <div class="centered-form">
+      <div class="centered-tab">
+        <script src="/js/libs/moment.js"></script>
+        <script src="/js/libs/jquery-3.2.1.min.js"></script>
+        <table class="list" style="width:100%">
+          <tr>
+            <!-- <caption id="lastUpdate" style="font-weight:bold"> -->
+              <script>
+               var lu = `Last Updated: ${moment().format('h:mm:ss A')}`;
+               $("#lastUpdate").html(lu);
+              </script>
+            </caption>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Administrator</th>
+          </tr>
+          {{#each data}}
+          <form>
+            <tr>
+              <td><input type="text" name="username" autocomplete="off" value={{username}}></td>
+              <td><input type="text" name="password" autocomplete="off" value={{password}}></td>
+              <td><input type="Boolean" name="administration" autocomplete="off" value={{administration}}></td>
+              <td>
+                <button type="submit">Update</button>
+              </td>
+            </tr>
+          </form>
+          {{/each}}
+        </table>
+      </div>
+    </div>
+
+
+
+  </body>
+
+</html>
