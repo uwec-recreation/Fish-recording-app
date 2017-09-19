@@ -67,7 +67,7 @@ app.get('/login', getUser,(req, res) => {
     res.redirect('/ticket');
   }
 
-  render.login(req, res, {});
+  render.login(req, res);
 });
 
 
@@ -80,34 +80,32 @@ app.post('/login', async (req, res) => {
     await res.cookie('x-auth', token);
     res.redirect('/ticket');
   } catch (e) {
-    render.login(req, res, 'Login Attempt Failed');
+    render.login(req, res, {error:'Login Attempt Failed'});
   }
 });
 
 
 
 ////////////REGISTER////////////
-app.get('/register', getUser, (req, res) => {
+app.get('/register', authenticate, (req, res) => {
 
-  if(req.user) {
-    res.redirect('/ticket');
-  }
-
-  res.render('register.hbs', {
-    pageTitle: 'Register | JigsUp'
-  });
+  render.register(req, res);
 });
 
 
-app.post('/register', async (req,res) => {
+app.post('/register', authenticate, async (req,res) => {
   try {
-    const body = _.pick(req.body, ['username', 'password']);
+    const body = await _.pick(req.body, ['username', 'password']);
+    console.log('getting info');
     body.username = body.username.toLowerCase();
-    const user = new User(body);
+    console.log('converting to lowercase');
+    console.log('creating user....');
+    const user = await new User(body);
+    console.log('created');
+    console.log('Saving user.....');
     await user.save();
-    const token = await user.generateAuthToken();
-    res.cookie('x-auth', token);
-    render.login(req, res, {register: 'Registration Successful'});
+    console.log('saved');
+    render.register(req, res, {register: 'Registration Successful'});
   } catch (e) {
     render.register(req, res, {error: 'Registration Failed'});
   }
@@ -143,8 +141,16 @@ app.get('/list', authenticate, async (req, res) => {
 
 
 
+////////////EDIT DATA////////////
+
+app.get('/edit', authenticate, async (req, res) => {
+
+  data = await Contestant.find({});
+
+  render.editData(req, res, {data});
 
 
+});
 
 
 ////////////////////////////

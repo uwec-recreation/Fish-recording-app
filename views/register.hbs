@@ -1,4 +1,9 @@
 {{> header}}
+
+  <script src="/js/libs/jquery-3.2.1.min.js"></script>
+  <script src="/js/fade.js"></script>
+
+
     <div class="centered-form">
       <div class="centered-form__form">
         <form action="/register" method="POST">
@@ -7,6 +12,9 @@
             <h3>Register</h3>
           </div>
 
+          {{#if register}}
+          <label class="message" style="color:green">{{register}}</label>
+          {{/if}}
           {{#if error}}
           <label class="message" style="color:red">{{error}}</label>
           {{/if}}
@@ -18,7 +26,7 @@
 
           <div class="form-field">
             <label>Password</label>
-            <input type="password" id="password" name="password" autocomplete="false" required/>
+            <input type="text" id="password" name="password" autocomplete="false" required/>
           </div>
 
           <!--

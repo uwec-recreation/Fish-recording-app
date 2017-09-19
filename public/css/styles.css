@@ -43,6 +43,10 @@ th {
   font-weight: bold;
 }
 
+#admin {
+  background-color: #813154;
+}
+
 .login li {
   float: right;
 }
@@ -54,12 +58,18 @@ th {
   width: 100%;
 }
 
+td input {
+
+}
 .centered-form {
   display: flex;
   align-items: center;
   height: 100vh;
   width: 100vw;
   justify-content: center;
+  overflow: scroll;
+  z-index: 1;
+  padding-top: 120px;
   background: -moz-linear-gradient(125deg, rgba(39,107,130,1) 0%, rgba(49,84,129,1) 100%); /* ff3.6+ */
   background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, rgba(49,84,129,1)), color-stop(100%, rgba(39,107,130,1))); /* safari4+,chrome */
   background: -webkit-linear-gradient(125deg, rgba(39,107,130,1) 0%, rgba(49,84,129,1) 100%); /* safari5.1+,chrome10+ */
@@ -85,6 +95,7 @@ th {
   border-radius: 5px;
   border-style: none;
   padding: 0;
+  top: 120px;
   margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
@@ -123,11 +134,13 @@ th {
 .navigation-bar ul {
   position: fixed;
   width: 100%;
+  height: 44px;
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
   background-color: #e1e1e1;
+  z-index: 2;
 }
 
 .navigation-bar li {

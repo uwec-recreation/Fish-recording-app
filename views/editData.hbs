@@ -1,0 +1,49 @@
+{{> header}}
+    <div class="centered-form">
+      <div class="centered-tab">
+        <script src="/js/libs/moment.js"></script>
+        <script src="/js/libs/jquery-3.2.1.min.js"></script>
+        <table class="list" style="width:100%">
+          <tr>
+            <!-- <caption id="lastUpdate" style="font-weight:bold"> -->
+              <script>
+               var lu = `Last Updated: ${moment().format('h:mm:ss A')}`;
+               $("#lastUpdate").html(lu);
+              </script>
+            </caption>
+            <th>Ticket Number</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Fish</th>
+            <th>Weight</th>
+            <th>Time</th>
+          </tr>
+          {{#each data}}
+          <form>
+            <tr>
+              <td><input type="text" name="ticket" autocomplete="off" value={{ticket}}></td>
+              <td><input type="text" name="firstName" autocomplete="off" value={{firstName}}></td>
+              <td><input type="text" name="lastName" autocomplete="off" value={{lastName}}></td>
+              <td><input type="text" name="fish" autocomplete="off" value={{fish}}></td>
+              <td><input type="text" name="weight" autocomplete="off" value={{weight}}></td>
+              <td>
+                <script>
+                   var str = moment({{createdAt}}).format('h:mm:ss A');
+                   $("td:last").html(str);
+                </script>
+              </td>
+              <td>
+                <button type="submit">Update</button>
+              </td>
+            </tr>
+          </form>
+          {{/each}}
+        </table>
+      </div>
+    </div>
+
+
+
+  </body>
+
+</html>
