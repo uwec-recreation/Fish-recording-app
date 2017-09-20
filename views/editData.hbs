@@ -3,24 +3,22 @@
       <div class="centered-tab">
         <script src="/js/libs/moment.js"></script>
         <script src="/js/libs/jquery-3.2.1.min.js"></script>
+
         <table class="list" style="width:100%">
           <tr>
-            <!-- <caption id="lastUpdate" style="font-weight:bold"> -->
-              <script>
-               var lu = `Last Updated: ${moment().format('h:mm:ss A')}`;
-               $("#lastUpdate").html(lu);
-              </script>
-            </caption>
-            <th>Ticket Number</th>
+
+            <th>Ticket #</th>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Fish</th>
             <th>Weight</th>
             <th>Time</th>
+            <th>Update</th>
           </tr>
           {{#each data}}
-          <form>
+          <form name="{{_id}}" action="/editData" method="POST">
             <tr>
+              <td style="display: none;"><input type="text" name="id" value="{{_id}}" readonly></td>
               <td><input type="text" name="ticket" autocomplete="off" value={{ticket}}></td>
               <td><input type="text" name="firstName" autocomplete="off" value={{firstName}}></td>
               <td><input type="text" name="lastName" autocomplete="off" value={{lastName}}></td>

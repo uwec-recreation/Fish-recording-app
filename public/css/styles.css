@@ -22,6 +22,10 @@ h3 {
   font-size: 1.5rem;
 }
 
+caption {
+    font-weight:bold
+}
+
 ul, li {
   list-style-position: inside;
 }
@@ -36,6 +40,13 @@ table {
 
 th, td {
   padding: 15px;
+}
+
+td {
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 th {
@@ -59,7 +70,11 @@ th {
 }
 
 td input {
+  width: 100%;
+}
 
+td button {
+  width: 100%;
 }
 .centered-form {
   display: flex;
@@ -95,7 +110,6 @@ td input {
   border-radius: 5px;
   border-style: none;
   padding: 0;
-  top: 120px;
   margin-top: 20px;
   margin-left: auto;
   margin-right: auto;

@@ -19,10 +19,13 @@
         <li style="float:right"><a href="/logout">Logout</a></li>
         <li style="float:right"><a href="">{{username}}</a></li>
         <li style="float:right"><a href="/list">List</a></li>
+        {{#if editor}}
         <li style="float:right"><a href="/ticket">Ticket</a></li>
+        {{/if}}
         {{#if administration}}
-        <li id="admin" style="float:right"><a href="/register">Register</a></li>
-        <li id="admin" style="float:right"><a href="/edit">Edit</a></li>
+        <li id="admin" style="float:right"><a href="/registerAdmin">Register</a></li>
+        <li id="admin" style="float:right"><a href="/editData">Edit Data</a></li>
+        <li id="admin" style="float:right"><a href="/editUsers">Edit Users</a></li>
         {{/if}}
         {{/if}}
       </ul>

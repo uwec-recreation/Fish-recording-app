@@ -1,0 +1,49 @@
+{{> header}}
+
+  <script src="/js/libs/jquery-3.2.1.min.js"></script>
+  <script src="/js/fade.js"></script>
+
+
+    <div class="centered-form">
+      <div class="centered-form__form">
+        <form action="/register" method="POST">
+
+          <div class="form-field">
+            <h3>Register</h3>
+          </div>
+
+          {{#if register}}
+          <label class="message" style="color:green">{{register}}</label>
+          {{/if}}
+          {{#if error}}
+          <label class="message" style="color:red">{{error}}</label>
+          {{/if}}
+
+          <div class="form-field">
+            <label>Username</label>
+            <input type="text" name="username" autocomplete="false" required autofocus/>
+          </div>
+
+          <div class="form-field">
+            <label>Password</label>
+            <input type="text" id="password" name="password" autocomplete="false" required/>
+          </div>
+
+          <!--
+          <div class="form-field">
+            <label>Retype Password</label>
+            <input type="password" id="password_confirm" name="password_confirm" required/>
+          </div>
+          -->
+
+          <div class="form-field">
+            <button type="submit" id="submit">Register</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="/js/libs/jquery-3.2.1.min.js"></script>
+    <script src="/js/passwordVerification.js"></script>
+  </body>
+</html>
