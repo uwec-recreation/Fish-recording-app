@@ -3,6 +3,7 @@
       <div class="centered-tab">
         <script src="/js/libs/moment.js"></script>
         <script src="/js/libs/jquery-3.2.1.min.js"></script>
+        <script src="/js/delete.js"></script>
 
         <table class="list" style="width:100%">
           <tr>
@@ -14,6 +15,7 @@
             <th>Weight</th>
             <th>Time</th>
             <th>Update</th>
+            <th>Delete</th>
           </tr>
           {{#each data}}
           <form name="{{_id}}" action="/editData" method="POST">
@@ -22,7 +24,15 @@
               <td><input type="text" name="ticket" autocomplete="off" value={{ticket}}></td>
               <td><input type="text" name="firstName" autocomplete="off" value={{firstName}}></td>
               <td><input type="text" name="lastName" autocomplete="off" value={{lastName}}></td>
-              <td><input type="text" name="fish" autocomplete="off" value={{fish}}></td>
+              <td>
+                <select name="fish">
+                  <option value="{{fish}}">{{fish}}</option>
+                  <option value="fish1">fish1</option>
+                  <option value="fish2">fish2</option>
+                  <option value="fish3">fish3</option>
+                  <option value="fish4">fish4</option>
+                </select>
+              </td>
               <td><input type="text" name="weight" autocomplete="off" value={{weight}}></td>
               <td>
                 <script>
@@ -32,6 +42,9 @@
               </td>
               <td>
                 <button type="submit">Update</button>
+              </td>
+              <td>
+                <button type="button" style="background-color: #B33A3A;" onclick="EnableDelete();">Delete</button>
               </td>
             </tr>
           </form>

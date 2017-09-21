@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const hbs = require('hbs');
 const Moment = require('moment');
+const bcrypt = require('bcryptjs');
 const {ObjectID} = require('mongodb');
 
 var {mongoose} = require('./db/mongoose');
@@ -178,23 +179,37 @@ app.get('/editUsers', admin, async (req, res) => {
 
 app.post('/editUsers', admin, async (req, res) => {
 
-  var body = _.pick(req.body, ['firstName', 'lastName', 'ticket', 'fish', 'weight']);
+  var body = _.pick(req.body, ['username', 'administration', 'editor']);
 
   try {
-    await Contestant.findOneAndUpdate({_id: req.body.id}, {$set: body}, {new: true});
+    body.administration = (body.administration == 'true');
+    body.editor = (body.editor == 'true');
+    await User.findOneAndUpdate({_id: req.body.id}, {$set: body}, {new: true});
 
-    data = await Contestant.find({});
+    data = await User.find({});
     _.merge(data, {success: 'Data Successfully Udpated'});
-    render.editData(req, res, {data});
+    render.editUsers(req, res, {data});
   }
   catch (e) {
-
-    data = await Contestant.find({});
+    console.log(e);
+    data = await User.find({});
     _.merge(data, {error: 'Something Went Wrong'});
-    render.editData(req, res, {data});
+    render.editUsers(req, res, {data});
   }
 });
 
+
+app.post('/deleteUser', admin, async (req, res) => {
+
+  var body = _.pick(req.body, ['username', 'administration', 'editor']);
+
+    console.log(body.username);
+
+    data = await User.find({});
+    _.merge(data, {success: 'Data Successfully Udpated'});
+    render.editUsers(req, res, {data});
+
+});
 
 
 

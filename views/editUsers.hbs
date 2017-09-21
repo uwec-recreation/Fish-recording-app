@@ -3,27 +3,39 @@
       <div class="centered-tab">
         <script src="/js/libs/moment.js"></script>
         <script src="/js/libs/jquery-3.2.1.min.js"></script>
+        <script src="/js/delete.js"></script>
 
         <table class="list" style="width:100%">
           <tr>
 
             <th>Identification</th>
             <th>Username</th>
-            <th>Password</th>
-            <th>Administration</th>
+            <th>Admin</th>
             <th>Editor</th>
             <th>Update</th>
+            <th>Delete</th>
           </tr>
           {{#each data}}
-          <form name="{{_id}}" action="/editData" method="POST">
+          <form name="{{_id}}" action="/editUsers" method="POST">
             <tr>
-              <td style="display: none;"><input type="text" name="id" value="{{_id}}" readonly></td>
-              <td><input type="text" name="ticket" autocomplete="off" value={{username}}></td>
-              <td><input type="text" name="firstName" autocomplete="off" value={{password}}></td>
-              <td><input type="text" name="lastName" autocomplete="off" value={{administration}}></td>
-              <td><input type="text" name="lastName" autocomplete="off" value={{editor}}></td>
+              <input type="text" name="id" value="{{_id}}" readonly hidden="hidden">
+              <td style="font-size: 12px;">{{_id}}</td>
+              <td><input type="text" name="username" autocomplete="off" value={{username}}></td>
+              {{#if administration}}
+              <td><input type="checkbox" name="administration" checked="checked" value={{administration}}></td>
+              {{else}}
+              <td><input type="checkbox" name="administration" value={{administration}}></td>
+              {{/if}}
+              {{#if editor}}
+              <td><input type="checkbox" name="editor" checked="checked" value={{editor}}></td>
+              {{else}}
+              <td><input type="checkbox" name="editor" value={{editor}}></td>
+              {{/if}}
               <td>
                 <button type="submit">Update</button>
+              </td>
+              <td>
+                <button type="button" style="background-color: #B33A3A;" onclick="EnableDelete();">Delete</button>
               </td>
             </tr>
           </form>
