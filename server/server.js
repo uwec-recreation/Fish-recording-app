@@ -12,7 +12,7 @@ const {ObjectID} = require('mongodb');
 var {mongoose} = require('./db/mongoose');
 var {Contestant} = require('./models/contestant');
 var {User} = require('./models/user');
-var {authenticate, getUser} = require('./middleware/authenticate');
+var {authenticate, getUser, admin, editor} = require('./middleware/authenticate');
 var render = require('./render/render');
 
 const publicPath = path.join(__dirname, '../public');
@@ -35,12 +35,12 @@ app.get('/', (req, res) => {
 
 ////////////TICKET////////////
 
-app.get('/ticket', authenticate, (req, res) => {
+app.get('/ticket', editor, (req, res) => {
 
   render.ticket(req, res);
 });
 
-app.post('/ticket', authenticate, (req, res) => {
+app.post('/ticket', editor, (req, res) => {
 
   var contestant = new Contestant({
     firstName: req.body.firstName,
@@ -78,7 +78,7 @@ app.post('/login', async (req, res) => {
     const user = await User.findByCredentials(body.username, body.password);
     const token = await user.generateAuthToken();
     await res.cookie('x-auth', token);
-    res.redirect('/ticket');
+    res.redirect('/list');
   } catch (e) {
     render.login(req, res, {error:'Login Attempt Failed'});
   }
@@ -87,24 +87,18 @@ app.post('/login', async (req, res) => {
 
 
 ////////////REGISTER////////////
-app.get('/register', authenticate, (req, res) => {
+app.get('/register', (req, res) => {
 
   render.register(req, res);
 });
 
 
-app.post('/register', authenticate, async (req,res) => {
+app.post('/register', async (req,res) => {
   try {
     const body = await _.pick(req.body, ['username', 'password']);
-    console.log('getting info');
     body.username = body.username.toLowerCase();
-    console.log('converting to lowercase');
-    console.log('creating user....');
     const user = await new User(body);
-    console.log('created');
-    console.log('Saving user.....');
     await user.save();
-    console.log('saved');
     render.register(req, res, {register: 'Registration Successful'});
   } catch (e) {
     render.register(req, res, {error: 'Registration Failed'});
@@ -143,14 +137,93 @@ app.get('/list', authenticate, async (req, res) => {
 
 ////////////EDIT DATA////////////
 
-app.get('/edit', authenticate, async (req, res) => {
+app.get('/editData', admin, async (req, res) => {
 
   data = await Contestant.find({});
 
   render.editData(req, res, {data});
 
+});
+
+app.post('/editData', admin, async (req, res) => {
+
+  var body = _.pick(req.body, ['firstName', 'lastName', 'ticket', 'fish', 'weight']);
+
+  try {
+    await Contestant.findOneAndUpdate({_id: req.body.id}, {$set: body}, {new: true});
+
+    data = await Contestant.find({});
+    _.merge(data, {success: 'Data Successfully Udpated'});
+    render.editData(req, res, {data});
+  }
+  catch (e) {
+
+    data = await Contestant.find({});
+    _.merge(data, {error: 'Something Went Wrong'});
+    render.editData(req, res, {data});
+  }
+});
+
+
+
+////////////EDIT USERS////////////
+
+app.get('/editUsers', admin, async (req, res) => {
+
+  data = await User.find({});
+
+  render.editUsers(req, res, {data});
 
 });
+
+app.post('/editUsers', admin, async (req, res) => {
+
+  var body = _.pick(req.body, ['firstName', 'lastName', 'ticket', 'fish', 'weight']);
+
+  try {
+    await Contestant.findOneAndUpdate({_id: req.body.id}, {$set: body}, {new: true});
+
+    data = await Contestant.find({});
+    _.merge(data, {success: 'Data Successfully Udpated'});
+    render.editData(req, res, {data});
+  }
+  catch (e) {
+
+    data = await Contestant.find({});
+    _.merge(data, {error: 'Something Went Wrong'});
+    render.editData(req, res, {data});
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ////////////////////////////

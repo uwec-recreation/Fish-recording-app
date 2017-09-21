@@ -1,0 +1,39 @@
+{{> header}}
+    <div class="centered-form">
+      <div class="centered-tab">
+        <script src="/js/libs/moment.js"></script>
+        <script src="/js/libs/jquery-3.2.1.min.js"></script>
+
+        <table class="list" style="width:100%">
+          <tr>
+
+            <th>Identification</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Administration</th>
+            <th>Editor</th>
+            <th>Update</th>
+          </tr>
+          {{#each data}}
+          <form name="{{_id}}" action="/editData" method="POST">
+            <tr>
+              <td style="display: none;"><input type="text" name="id" value="{{_id}}" readonly></td>
+              <td><input type="text" name="ticket" autocomplete="off" value={{username}}></td>
+              <td><input type="text" name="firstName" autocomplete="off" value={{password}}></td>
+              <td><input type="text" name="lastName" autocomplete="off" value={{administration}}></td>
+              <td><input type="text" name="lastName" autocomplete="off" value={{editor}}></td>
+              <td>
+                <button type="submit">Update</button>
+              </td>
+            </tr>
+          </form>
+          {{/each}}
+        </table>
+      </div>
+    </div>
+
+
+
+  </body>
+
+</html>
