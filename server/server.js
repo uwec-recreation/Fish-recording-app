@@ -166,6 +166,18 @@ app.post('/editData', admin, async (req, res) => {
 });
 
 
+app.post('/deleteTicket', admin, async (req, res) => {
+
+  await Contestant.findOneAndRemove({_id: req.body.id});
+
+
+    data = await Contestant.find({});
+    _.merge(data, {success: 'Data Successfully Udpated'});
+    render.editData(req, res, {data});
+
+});
+
+
 
 ////////////EDIT USERS////////////
 
@@ -201,9 +213,7 @@ app.post('/editUsers', admin, async (req, res) => {
 
 app.post('/deleteUser', admin, async (req, res) => {
 
-  var body = _.pick(req.body, ['username', 'administration', 'editor']);
-
-    console.log(body.username);
+  await User.findOneAndRemove({_id: req.body.id});
 
     data = await User.find({});
     _.merge(data, {success: 'Data Successfully Udpated'});

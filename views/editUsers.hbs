@@ -3,7 +3,7 @@
       <div class="centered-tab">
         <script src="/js/libs/moment.js"></script>
         <script src="/js/libs/jquery-3.2.1.min.js"></script>
-        <script src="/js/delete.js"></script>
+
 
         <table class="list" style="width:100%">
           <tr>
@@ -12,8 +12,16 @@
             <th>Username</th>
             <th>Admin</th>
             <th>Editor</th>
-            <th>Update</th>
-            <th>Delete</th>
+            <th>
+            <section title=".slideThree">
+                <!-- .slideThree -->
+                <div class="slideThree">
+                  <input type="checkbox" value="None" id="deleteCheck" name="check"/>
+                  <label for="deleteCheck"></label>
+                </div>
+                <!-- end .slideThree -->
+              </section>
+            </th>
           </tr>
           {{#each data}}
           <form name="{{_id}}" action="/editUsers" method="POST">
@@ -22,20 +30,18 @@
               <td style="font-size: 12px;">{{_id}}</td>
               <td><input type="text" name="username" autocomplete="off" value={{username}}></td>
               {{#if administration}}
-              <td><input type="checkbox" name="administration" checked="checked" value={{administration}}></td>
+              <td><input type="checkbox" name="administration" checked="checked" value="true"></td>
               {{else}}
-              <td><input type="checkbox" name="administration" value={{administration}}></td>
+              <td><input type="checkbox" name="administration" value="true"></td>
               {{/if}}
               {{#if editor}}
-              <td><input type="checkbox" name="editor" checked="checked" value={{editor}}></td>
+              <td><input type="checkbox" name="editor" checked="checked" value="true"></td>
               {{else}}
-              <td><input type="checkbox" name="editor" value={{editor}}></td>
+              <td><input type="checkbox" name="editor" value="true"></td>
               {{/if}}
               <td>
-                <button type="submit">Update</button>
-              </td>
-              <td>
-                <button type="button" style="background-color: #B33A3A;" onclick="EnableDelete();">Delete</button>
+                <button id="update" type="submit">Update</button>
+                <button id="delete" type="submit" formaction="/deleteUser" style="background-color: #B33A3A;" hidden="hidden">Delete</button>
               </td>
             </tr>
           </form>
@@ -44,6 +50,7 @@
       </div>
     </div>
 
+<script src="/js/delete.js"></script>
 
 
   </body>

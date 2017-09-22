@@ -14,8 +14,17 @@
             <th>Fish</th>
             <th>Weight</th>
             <th>Time</th>
-            <th>Update</th>
-            <th>Delete</th>
+            <th>
+            <section title=".slideThree">
+                <!-- .slideThree -->
+                <div class="slideThree">
+                  <input type="checkbox" value="None" id="deleteCheck" name="check"/>
+                  <label for="deleteCheck"></label>
+                </div>
+                <!-- end .slideThree -->
+              </section>
+            </th>
+
           </tr>
           {{#each data}}
           <form name="{{_id}}" action="/editData" method="POST">
@@ -41,10 +50,8 @@
                 </script>
               </td>
               <td>
-                <button type="submit">Update</button>
-              </td>
-              <td>
-                <button type="button" style="background-color: #B33A3A;" onclick="EnableDelete();">Delete</button>
+                <button id="update" type="submit">Update</button>
+                <button id="delete" type="submit" formaction="/deleteTicket" style="background-color: #B33A3A;" hidden="hidden">Delete</button>
               </td>
             </tr>
           </form>
@@ -53,7 +60,7 @@
       </div>
     </div>
 
-
+<script src="/js/delete.js"></script>
 
   </body>
 
