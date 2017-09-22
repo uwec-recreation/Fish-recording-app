@@ -31,6 +31,9 @@ register = (req, res, info) => {
 registerAdmin = (req, res, info) => {
   data = {
     pageTitle: 'RegisterAdmin | JigsUp',
+    username: req.user.username,
+    administration: req.user.administration,
+    editor: req.user.editor
   };
   _.merge(data, info);
   res.render('registerAdmin.hbs', data);
@@ -70,4 +73,4 @@ editUsers = (req, res, info) => {
 };
 
 
-module.exports = {login, ticket, register, list, editData, editUsers};
+module.exports = {login, ticket, register, list, editData, editUsers, registerAdmin};

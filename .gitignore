@@ -1,4 +1,5 @@
-node_modules/
 server/config/config.json
 mongo-data/
 runDB.bat
+DBstart.bat
+node_modules/

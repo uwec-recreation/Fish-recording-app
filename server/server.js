@@ -106,6 +106,25 @@ app.post('/register', async (req,res) => {
   }
 });
 
+app.get('/registerAdmin', admin, (req, res) => {
+
+  render.registerAdmin(req, res);
+});
+
+
+app.post('/registerAdmin', admin, async (req,res) => {
+  try {
+    const body = await _.pick(req.body, ['username', 'password', 'administration', 'editor']);
+    body.username = body.username.toLowerCase();
+    body.administration = (body.administration == 'true');
+    body.editor = (body.editor == 'true');
+    const user = await new User(body);
+    await user.save();
+    render.registerAdmin(req, res, {register: 'Registration Successful'});
+  } catch (e) {
+    render.registerAdmin(req, res, {error: 'Registration Failed'});
+  }
+});
 
 
 ////////////LOGOUT////////////

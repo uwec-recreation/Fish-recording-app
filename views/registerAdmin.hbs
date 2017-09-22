@@ -6,7 +6,7 @@
 
     <div class="centered-form">
       <div class="centered-form__form">
-        <form action="/register" method="POST">
+        <form action="/registerAdmin" method="POST">
 
           <div class="form-field">
             <h3>Register</h3>
@@ -27,6 +27,21 @@
           <div class="form-field">
             <label>Password</label>
             <input type="text" id="password" name="password" autocomplete="false" required/>
+          </div>
+
+          <div class="form-field">
+
+
+            <label>Admin</label>
+            <div class="squaredThree">
+              <input type="checkbox" value="true" id="squaredThree" name="admin"/>
+              <label for="squaredThree"></label>
+            </div>
+            <label>Editor</label>
+            <div class="squaredThree">
+              <input type="checkbox" value="true" id="squaredThree" name="editor"/>
+              <label for="squaredThree"></label>
+            </div>
           </div>
 
           <!--
