@@ -1,5 +1,19 @@
 {{> header}}
     <div class="centered-form">
+
+      {{#if error}}
+      <div class="centered-tab" id="error">
+        {{error}}
+      {{else}}
+        {{#if success}}
+        <div class="centered-tab" id="success">
+          {{success}}
+        {{else}}
+        <div class="centered-tab">
+        {{/if}}
+      </div>
+      {{/if}}
+
       <div class="centered-tab">
         <script src="/js/libs/moment.js"></script>
         <script src="/js/libs/jquery-3.2.1.min.js"></script>
@@ -24,7 +38,7 @@
             </th>
           </tr>
           {{#each data}}
-          <form name="{{_id}}" action="/editUsers" method="POST">
+          <form name="{{_id}}" action="/editUsers" method="POST" onsubmit="return confirm('Do you really want to Update/Delete?');">
             <tr>
               <input type="text" name="id" value="{{_id}}" readonly hidden="hidden">
               <td style="font-size: 12px;">{{_id}}</td>
@@ -51,7 +65,7 @@
     </div>
 
 <script src="/js/delete.js"></script>
-
+<script src="/js/messageClear.js"></script>
 
   </body>
 

@@ -114,9 +114,8 @@ app.get('/registerAdmin', admin, (req, res) => {
 
 app.post('/registerAdmin', admin, async (req,res) => {
   try {
-    const body = await _.pick(req.body, ['username', 'password', 'administration', 'editor']);
+    const body = await _.pick(req.body, ['username', 'password', 'editor']);
     body.username = body.username.toLowerCase();
-    body.administration = (body.administration == 'true');
     body.editor = (body.editor == 'true');
     const user = await new User(body);
     await user.save();
@@ -173,26 +172,28 @@ app.post('/editData', admin, async (req, res) => {
     await Contestant.findOneAndUpdate({_id: req.body.id}, {$set: body}, {new: true});
 
     data = await Contestant.find({});
-    _.merge(data, {success: 'Data Successfully Udpated'});
-    render.editData(req, res, {data});
+    render.editData(req, res, {data}, {success: 'Data Successfully Updated'});
   }
   catch (e) {
 
     data = await Contestant.find({});
-    _.merge(data, {error: 'Something Went Wrong'});
-    render.editData(req, res, {data});
+    render.editData(req, res, {data}, {error: 'Something Went Wrong'});
   }
 });
 
 
 app.post('/deleteTicket', admin, async (req, res) => {
 
-  await Contestant.findOneAndRemove({_id: req.body.id});
+  try {
+    await Contestant.findOneAndRemove({_id: req.body.id});
 
 
+      data = await Contestant.find({});
+      render.editData(req, res, {data}, {success: 'Data Successfully Updated'});
+  } catch (e) {
     data = await Contestant.find({});
-    _.merge(data, {success: 'Data Successfully Udpated'});
-    render.editData(req, res, {data});
+    render.editData(req, res, {data}, {error: 'Something Went Wrong'});
+  }
 
 });
 
@@ -218,26 +219,27 @@ app.post('/editUsers', admin, async (req, res) => {
     await User.findOneAndUpdate({_id: req.body.id}, {$set: body}, {new: true});
 
     data = await User.find({});
-    _.merge(data, {success: 'Data Successfully Udpated'});
-    render.editUsers(req, res, {data});
+    render.editUsers(req, res, {data}, {success: 'Data Successfully Updated'});
   }
   catch (e) {
     console.log(e);
     data = await User.find({});
-    _.merge(data, {error: 'Something Went Wrong'});
-    render.editUsers(req, res, {data});
+    render.editUsers(req, res, {data}, {error: 'Something Went Wrong'});
   }
 });
 
 
 app.post('/deleteUser', admin, async (req, res) => {
 
-  await User.findOneAndRemove({_id: req.body.id});
+  try {
+    await User.findOneAndRemove({_id: req.body.id});
 
     data = await User.find({});
-    _.merge(data, {success: 'Data Successfully Udpated'});
-    render.editUsers(req, res, {data});
-
+    render.editUsers(req, res, {data}, {success: 'Data Successfully Udpated'});
+  } catch (e) {
+    data = await User.find({});
+    render.editUsers(req, res, {data}, {error: 'Something Went Wrong'});
+  }
 });
 
 

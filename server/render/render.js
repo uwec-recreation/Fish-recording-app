@@ -50,24 +50,26 @@ list = (req, res, info) => {
   res.render('list.hbs', data);
 };
 
-editData = (req, res, info) => {
+editData = (req, res, info, msg) => {
   data = {
     pageTitle: 'Edit Data | JigsUp',
     username: req.user.username,
     administration: req.user.administration,
     editor: req.user.editor
   };
+  _.merge(data, msg);
   _.merge(data, info);
   res.render('editData.hbs', data);
 };
 
-editUsers = (req, res, info) => {
+editUsers = (req, res, info, msg) => {
   data = {
     pageTitle: 'Edit Users | JigsUp',
     username: req.user.username,
     administration: req.user.administration,
     editor: req.user.editor
   };
+  _.merge(data, msg);
   _.merge(data, info);
   res.render('editUsers.hbs', data);
 };

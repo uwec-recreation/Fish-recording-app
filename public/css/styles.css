@@ -86,7 +86,8 @@ td #delete {
   margin: auto;
 }
 .centered-form {
-  display: flex;
+  display: block;
+  position: relative;
   align-items: center;
   height: 100vh;
   width: 100vw;
@@ -103,11 +104,12 @@ td #delete {
 }
 
 .centered-form__form {
+  display: block;
   background: rgba(250, 250, 250, 0.9);
   border: 1px solid #e1e1e1;
   border-radius: 5px;
   padding: 0px 20px;
-  margin: 20px;
+  margin: auto;
   width: 230px;
 }
 
@@ -119,12 +121,37 @@ td #delete {
   border-radius: 5px;
   border-style: none;
   padding: 0;
+  top: 50px;
   margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
   width: 1000px;
-  min-height: 240px;
+  min-height: 55px;
   height: auto;
+}
+
+div#error.centered-tab {
+  background-color: #B33A3A;
+  font-size: 45px;
+  text-align: center;
+}
+
+div#success.centered-tab {
+  background-color: #4BB543;
+  font-size: 45px;
+  text-align: center;
+}
+
+.centered-tab__title {
+  height: 40px;
+  width: 100%;
+  text-align: center;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  vertical-align: middle;
+  line-height: 40px;
+  margin: 0;
+  background: #c4c4c4;
 }
 
 .form-field {
