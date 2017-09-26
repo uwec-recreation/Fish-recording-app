@@ -159,8 +159,11 @@ app.get('/list', authenticate, async (req, res) => {
 app.get('/editData', admin, async (req, res) => {
 
   data = await Contestant.find({});
-
-  render.editData(req, res, {data});
+  fish1 = await Contestant.find({fish: 'fish1'});
+  fish2 = await Contestant.find({fish: 'fish2'});
+  fish3 = await Contestant.find({fish: 'fish3'});
+  fish4 = await Contestant.find({fish: 'fish4'});
+  render.editData(req, res, {data}, {total: data.length, fish1: fish1.length, fish2: fish2.length, fish3: fish3.length, fish4: fish4.length});
 
 });
 
@@ -172,12 +175,12 @@ app.post('/editData', admin, async (req, res) => {
     await Contestant.findOneAndUpdate({_id: req.body.id}, {$set: body}, {new: true});
 
     data = await Contestant.find({});
-    render.editData(req, res, {data}, {success: 'Data Successfully Updated'});
+    render.editData(req, res, {data}, {success: 'Data Successfully Updated', total: data.length});
   }
   catch (e) {
 
     data = await Contestant.find({});
-    render.editData(req, res, {data}, {error: 'Something Went Wrong'});
+    render.editData(req, res, {data}, {error: 'Something Went Wrong', total: data.length});
   }
 });
 
@@ -189,10 +192,10 @@ app.post('/deleteTicket', admin, async (req, res) => {
 
 
       data = await Contestant.find({});
-      render.editData(req, res, {data}, {success: 'Data Successfully Updated'});
+      render.editData(req, res, {data}, {success: 'Data Successfully Updated', total: data.length});
   } catch (e) {
     data = await Contestant.find({});
-    render.editData(req, res, {data}, {error: 'Something Went Wrong'});
+    render.editData(req, res, {data}, {error: 'Something Went Wrong', total: data.length});
   }
 
 });
