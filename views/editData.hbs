@@ -4,25 +4,28 @@
       {{#if error}}
       <div class="centered-tab" id="error">
         {{error}}
+      </div>
       {{else}}
         {{#if success}}
         <div class="centered-tab" id="success">
           {{success}}
+        </div>
         {{else}}
         <div class="centered-tab">
+        </div>
         {{/if}}
       {{/if}}
-      </div>
 
 
+      <script src="/js/libs/moment.js"></script>
+      <script src="/js/libs/jquery-3.2.1.min.js"></script>
+      <script src="/js/delete.js"></script>
 
 
       <div class="centered-tab">
-        <script src="/js/libs/moment.js"></script>
-        <script src="/js/libs/jquery-3.2.1.min.js"></script>
-        <script src="/js/delete.js"></script>
 
-        <table class="list" style="width:100%">
+
+        <table class="list">
           <tr>
 
             <th>Ticket #</th>
@@ -77,13 +80,34 @@
       </div>
 
       <div class="centered-tab" id="info">
-        Total: {{total}}
-        fish1: {{fish1}}
-        fish2: {{fish2}}
-        fish3: {{fish3}}
-        fish4: {{fish4}}
+        <table>
+          <tr>
+            <th>Total</th>
+            <th>fish 1</th>
+            <th>fish 2</th>
+            <th>fish 3</th>
+            <th>fish 4</th>
+          </tr>
+          <tr>
+            <td>{{total}}</td>
+            <td>{{fish1}}</td>
+            <td>{{fish2}}</td>
+            <td>{{fish3}}</td>
+            <td>{{fish4}}</td>
+          </tr>
+        </table>
       </div>
-
+      <div class="centered-tab">
+          <form class="info_form">
+            <div class="info_stuff">
+              <button>get JSON</button>
+            </div>
+            <div class="info_stuff">
+              <input type="text"></input>
+              <button>DELETE ALL</button>
+            </div>
+          </form>
+      </div>
 
     </div>
 
