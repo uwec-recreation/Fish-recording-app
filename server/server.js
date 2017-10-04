@@ -18,6 +18,7 @@ var render = require('./render/render');
 
 const publicPath = path.join(__dirname, '../public');
 const partialsViewsPath = path.join(__dirname, '../views/partials');
+const viewsPath = path.join(__dirname, '../views');
 var app = express();
 hbs.registerPartials(partialsViewsPath);
 var port = process.env.PORT;
@@ -25,6 +26,7 @@ var port = process.env.PORT;
 app.use(bodyParser.json());
 app.use(express.static(publicPath));
 app.set('view engine', 'hbs');
+app.set('views',viewsPath);
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
