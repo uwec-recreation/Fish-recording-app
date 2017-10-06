@@ -56,10 +56,10 @@
               <td>
                 <select name="fish">
                   <option value="{{fish}}">{{fish}}</option>
-                  <option value="fish1">fish1</option>
-                  <option value="fish2">fish2</option>
-                  <option value="fish3">fish3</option>
-                  <option value="fish4">fish4</option>
+                  <option value="Northern">Northern</option>
+                  <option value="Walleye">Walleye</option>
+                  <option value="Bass">Bass</option>
+                  <option value="Pan Fish">Pan Fish</option>
                 </select>
               </td>
               <td><input type="text" name="weight" autocomplete="off" value={{weight}}></td>
@@ -107,7 +107,7 @@
           <form class="info_form">
             <label style="font-weight: bold;">To confirm, type DELETE</label>
             <input id="deleteAll" type="text"></input>
-            <button style="background-color: #B33A3A;" disabled="disabled">DELETE ALL</button>
+            <button id="deleteAllButton" disabled="disabled">DELETE ALL</button>
           </form>
         </div>
       </div>

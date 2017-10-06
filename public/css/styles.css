@@ -30,6 +30,15 @@ ul, li {
   list-style-position: inside;
 }
 
+#deleteAllButton {
+  background: #B33A3A;
+}
+
+#deleteAllButton:disabled {
+  cursor: default;
+  background: #bc6262;
+}
+
 table, th, td {
   border: 1px solid black;
 }
