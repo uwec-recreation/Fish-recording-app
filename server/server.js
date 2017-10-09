@@ -160,12 +160,12 @@ app.get('/list', authenticate, async (req, res) => {
 
 app.get('/editData', admin, async (req, res) => {
 
-  data = await Contestant.find({});
-  fish1 = await Contestant.find({fish: 'fish1'});
-  fish2 = await Contestant.find({fish: 'fish2'});
-  fish3 = await Contestant.find({fish: 'fish3'});
-  fish4 = await Contestant.find({fish: 'fish4'});
-  render.editData(req, res, {data}, {total: data.length, fish1: fish1.length, fish2: fish2.length, fish3: fish3.length, fish4: fish4.length});
+  data = await Contestant.find({}).sort({createdAt: -1});
+  northern = await Contestant.find({fish: 'Northern'});
+  walleye = await Contestant.find({fish: 'Walleye'});
+  bass = await Contestant.find({fish: 'Bass'});
+  panFish = await Contestant.find({fish: 'Pan Fish'});
+  render.editData(req, res, {data}, {total: data.length, northern: northern.length, walleye: walleye.length, bass: bass.length, panFish: panFish.length});
 
 });
 
@@ -176,13 +176,21 @@ app.post('/editData', admin, async (req, res) => {
   try {
     await Contestant.findOneAndUpdate({_id: req.body.id}, {$set: body}, {new: true});
 
-    data = await Contestant.find({});
-    render.editData(req, res, {data}, {success: 'Data Successfully Updated', total: data.length});
+    data = await Contestant.find({}).sort({createdAt: -1});
+    northern = await Contestant.find({fish: 'Northern'});
+    walleye = await Contestant.find({fish: 'Walleye'});
+    bass = await Contestant.find({fish: 'Bass'});
+    panFish = await Contestant.find({fish: 'Pan Fish'});
+    render.editData(req, res, {data}, {total: data.length, northern: northern.length, walleye: walleye.length, bass: bass.length, panFish: panFish.length, success: 'Data Successfully Updated'});
   }
   catch (e) {
 
-    data = await Contestant.find({});
-    render.editData(req, res, {data}, {error: 'Something Went Wrong', total: data.length});
+    data = await Contestant.find({}).sort({createdAt: -1});
+    northern = await Contestant.find({fish: 'Northern'});
+    walleye = await Contestant.find({fish: 'Walleye'});
+    bass = await Contestant.find({fish: 'Bass'});
+    panFish = await Contestant.find({fish: 'Pan Fish'});
+    render.editData(req, res, {data}, {total: data.length, northern: northern.length, walleye: walleye.length, bass: bass.length, panFish: panFish.length,error: 'Something Went Wrong'});
   }
 });
 
