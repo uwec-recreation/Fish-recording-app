@@ -104,12 +104,12 @@
           </form>
         </div>
         <div class="info_stuff">
-          <form class="info_form">
+          <form class="info_form" action="/winners" method="GET">
               <button>get Winners</button>
           </form>
         </div>
         <div class="info_stuff" style="float: right;">
-          <form class="info_form">
+          <form class="info_form" action="/deleteAll" method="POST" onsubmit="return confirm('DO YOU REALLY WANT TO DELETE ALL OF DATA?????');">
             <label style="font-weight: bold;">To confirm, type DELETE</label>
             <input id="deleteAll" type="text"></input>
             <button id="deleteAllButton" disabled="disabled">DELETE ALL</button>

@@ -3,15 +3,13 @@
       <div class="centered-tab">
         <script src="/js/libs/moment.js"></script>
         <script src="/js/libs/jquery-3.2.1.min.js"></script>
-        <script src="/js/updateMeta.js"></script>
-        <table class="list">
+        <script> var i = 1</script>
+
+        <table class="winners">
           <tr>
-            <caption id="lastUpdate" style="font-weight:bold">
-              <script>
-               var lu = `Last Updated: ${moment().format('h:mm:ss A')} </br> Listed by most recent added`;
-               $("#lastUpdate").html(lu);
-              </script>
-            </caption>
+            <caption id="lastUpdate" style="font-weight:bold">Winners</caption>
+
+            <th>Place</th>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Fish</th>
@@ -19,7 +17,18 @@
             <th>Time</th>
           </tr>
           {{#each data}}
-          <tr>
+          <tr id="row_{{_id}}">
+            <td id="place_{{_id}}">
+              <script>
+                $("#place_{{_id}}").html(i);
+                if(i > 25 && i%5 != 0 && i <= 300) {
+                  $("#row_{{_id}}").css("display", "none");
+                }
+
+                i += 1;
+
+              </script>
+            </td>
             <td>{{firstName}}</td>
             <td>{{lastName}}</td>
             <td>{{fish}}</td>
