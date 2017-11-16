@@ -1,53 +1,55 @@
 {{> header}}
 
-
-  <script src="/js/libs/jquery-3.2.1.min.js"></script>
   <script src="/js/fade.js"></script>
 
-    <div class="centered-form">
-      <div class="centered-form__form">
-        <form action="/ticket" method="POST">
-          <div class="form-field">
-            <h3>Angler Data</h3>
+  <div class="row">
+      <div class="col-md-4 col-md-offset-4">
+          <div class="login-panel panel panel-default">
+              <div class="panel-heading">
+                  <h3 class="panel-title">Angler Data</h3>
+                  {{#if error}}
+                  <label class="message" style="color:red">{{error}}</label>
+                  {{/if}}
+                  {{#if confirmation}}
+                  <label class="message" style="color:green">{{confirmation}}</label>
+                  {{/if}}
+              </div>
+              <div class="panel-body">
+                  <form role="form" action="/ticket" method="POST">
+                      <fieldset>
+                          <div class="form-group">
+                            <label>Ticket Number</label>
+                            <input class="form-control" type="text" name="ticketNumber" autocomplete="off" autofocus>
+                          </div>
+                          <div class="form-group">
+                            <label>First Name</label>
+                            <input class="form-control" type="text" name="firstName" autocomplete="off" autofocus>
+                          </div>
+                          <div class="form-group">
+                            <label>Last Name</label>
+                            <input class="form-control" type="text" name="lastName" autocomplete="off" autofocus>
+                          </div>
+                          <div class="form-group">
+                            <label>Fish Species</label>
+                            <select class="form-control" name="fish">
+                              <option value=""></option>
+                              <option value="Northern">Northern</option>
+                              <option value="Walleye">Walleye</option>
+                              <option value="Bass">Bass</option>
+                              <option value="Pan Fish">Pan Fish</option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <label>Weight (lb)</label>
+                            <input class="form-control" type="text" autocomplete="off" name="weight">
+                          </div>
+                          <button class="btn btn-lg btn-success btn-block">Submit</button>
+                      </fieldset>
+                  </form>
+              </div>
           </div>
-          {{#if error}}
-          <label class="message" style="color:red">{{error}}</label>
-          {{/if}}
-
-          {{#if confirmation}}
-          <label class="message" style="color:green">{{confirmation}}</label>
-          {{/if}}
-          <div class="form-field">
-            <label>Ticket Number</label>
-            <input type="text" name="ticketNumber" autocomplete="off" autofocus>
-          </div>
-          <div class="form-field">
-            <label>First Name</label>
-            <input type="text" name="firstName" autocomplete="off" autofocus>
-          </div>
-          <div class="form-field">
-            <label>Last Name</label>
-            <input type="text" name="lastName" autocomplete="off" autofocus>
-          </div>
-
-          <div class="form-field">
-            <label>Fish Species</label>
-            <select name="fish">
-              <option value=""></option>
-              <option value="Northern">Northern</option>
-              <option value="Walleye">Walleye</option>
-              <option value="Bass">Bass</option>
-              <option value="Pan Fish">Pan Fish</option>
-            </select></div>
-          <div class="form-field">
-            <label>Weight (lb)</label>
-            <input type="text" autocomplete="off" name="weight">
-          </div>
-          <div class="form-field">
-            <button type="submit">Submit</button>
-          </div>
-        </form>
       </div>
-    </div>
-  </body>
+  </div>
+</div>
+</body>
 </html>

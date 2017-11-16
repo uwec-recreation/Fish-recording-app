@@ -1,86 +1,107 @@
 {{> header}}
-    <div class="centered-form">
 
-      {{#if error}}
-      <div class="centered-tab" id="error">
-        {{error}}
-      </div>
-      {{else}}
-        {{#if success}}
-        <div class="centered-tab" id="success">
-          {{success}}
-        </div>
-        {{else}}
-        <div class="centered-tab">
-        </div>
-        {{/if}}
-      {{/if}}
+<link rel="stylesheet" href="/css/styles.css">
+<script src="/js/libs/moment.js"></script>
+
+<script src="/js/deleteAll.js"></script>
 
 
-      <script src="/js/libs/moment.js"></script>
-      <script src="/js/libs/jquery-3.2.1.min.js"></script>
-      <script src="/js/delete.js"></script>
+<div class="row">
+  <div class="col-smd-12 text-center">
+    {{#if error}}
+    <div id="error" style="background-color: #d9534f">
+      {{error}}
+    </div>
+    {{else}}
+    {{#if success}}
+    <div id="success" style="background-color: #66d63e">
+      {{success}}
+    </div>
+    {{else}}
+    {{/if}}
+    {{/if}}
+  </div>
+</div>
 
 
-      <div class="centered-tab">
-
-
-        <table class="list">
-          <tr>
-
-            <th>Ticket #</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Fish</th>
-            <th>Weight</th>
-            <th>Time</th>
-            <th>
-            <section title=".slideThree">
-                <!-- .slideThree -->
-                <div class="slideThree">
-                  <input type="checkbox" value="None" id="deleteCheck" name="check"/>
-                  <label for="deleteCheck"></label>
-                </div>
-                <!-- end .slideThree -->
-              </section>
-            </th>
-
-          </tr>
-          {{#each data}}
-          <form name="{{_id}}" action="/editData" method="POST" onsubmit="return confirm('Do you really want to Update/Delete?');">
+<!-- /.row -->
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <!-- /.panel-heading -->
+      <div class="panel-body">
+        <table width="100%" class="table table-striped table-bordered table-hover " id="dataTables-example">
+          <thead>
             <tr>
-              <td style="display: none;"><input type="text" name="id" value="{{_id}}" readonly></td>
-              <td><input type="text" name="ticket" autocomplete="off" value={{ticket}}></td>
-              <td><input type="text" name="firstName" autocomplete="off" value={{firstName}}></td>
-              <td><input type="text" name="lastName" autocomplete="off" value={{lastName}}></td>
-              <td>
-                <select name="fish">
-                  <option value="{{fish}}">{{fish}}</option>
-                  <option value="Northern">Northern</option>
-                  <option value="Walleye">Walleye</option>
-                  <option value="Bass">Bass</option>
-                  <option value="Pan Fish">Pan Fish</option>
-                </select>
-              </td>
-              <td><input type="text" name="weight" autocomplete="off" value={{weight}}></td>
-              <td>
-                <script>
-                   var str = moment({{createdAt}}).format('h:mm:ss A');
-                   $("td:last").html(str);
-                </script>
-              </td>
-              <td>
-                <button id="update" type="submit">Update</button>
-                <button id="delete" type="submit" formaction="/deleteTicket" style="background-color: #B33A3A;" hidden="hidden">Delete</button>
-              </td>
-            </tr>
-          </form>
-          {{/each}}
-        </table>
-      </div>
 
-      <div class="centered-tab" id="info">
-        <table>
+              <th>Ticket #</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Fish</th>
+              <th>Weight</th>
+              <th>Time</th>
+              <th>
+                <section title=".slideThree">
+                  <!-- .slideThree -->
+                  <div class="slideThree">
+                    <input type="checkbox" value="None" id="deleteCheck" name="check"/>
+                    <label for="deleteCheck"></label>
+                  </div>
+                  <!-- end .slideThree -->
+                </section>
+              </th>
+
+            </tr>
+          </thead>
+          <tbody>
+            {{#each data}}
+            <form name="{{_id}}" action="/editData" method="POST" onsubmit="return confirm('Do you really want to Update/Delete?');">
+              <tr>
+                <td style="display: none;"><input type="text" name="id" value="{{_id}}" readonly></td>
+                <td><h4><input type="text" name="ticket" autocomplete="off" value={{ticket}}></h4></td>
+                <td><h4><input type="text" name="firstName" autocomplete="off" value={{firstName}}></h4></td>
+                <td><h4><input type="text" name="lastName" autocomplete="off" value={{lastName}}></h4></td>
+                <td>
+                  <h4>
+                  <select name="fish">
+                    <option value="{{fish}}">{{fish}}</option>
+                    <option value="Northern">Northern</option>
+                    <option value="Walleye">Walleye</option>
+                    <option value="Bass">Bass</option>
+                    <option value="Pan Fish">Pan Fish</option>
+                  </select>
+                </h4>
+                </td>
+                <td><input type="text" name="weight" autocomplete="off" value={{weight}}></td>
+                <td>
+                  <h4>
+                  <script>
+                  var str = moment({{createdAt}}).format('h:mm:ss A');
+                  $("h4:last").html(str);
+                  </script>
+                </h4>
+                </td>
+                <td>
+                  <button id="update" class="btn btn-primary btn-lg" type="submit">Update</button>
+                  <button id="delete" class="btn btn-danger btn-lg" type="submit" formaction="/deleteTicket" style="display: none">Delete</button>
+                </td>
+              </tr>
+            </form>
+            {{/each}}
+          </tbody>
+        </table>
+        <!-- /.table-responsive -->
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="panel panel-default">
+    <div class="panel-body">
+
+      <div class="col-lg-12">
+        <!-- /.panel-heading -->
+        <table class="table table-striped table-bordered">
           <tr>
             <th>Total</th>
             <th>Northern</th>
@@ -97,33 +118,38 @@
           </tr>
         </table>
       </div>
-      <div class="centered-tab">
-        <div class="info_stuff">
-          <form class="info_form">
-              <button>get JSON</button>
-          </form>
-        </div>
-        <div class="info_stuff">
-          <form class="info_form" action="/winners" method="GET">
-              <button>get Winners</button>
-          </form>
-        </div>
-        <div class="info_stuff" style="float: right;">
-          <form class="info_form" action="/deleteAll" method="POST" onsubmit="return confirm('DO YOU REALLY WANT TO DELETE ALL OF DATA?????');">
-            <label style="font-weight: bold;">To confirm, type DELETE</label>
-            <input id="deleteAll" type="text"></input>
-            <button id="deleteAllButton" disabled="disabled">DELETE ALL</button>
-          </form>
-        </div>
+      <div class="btn-group">
+      <div class="col-lg-6">
+        <form role="form">
+          <button class="btn btn-primary btn-lg">get JSON</button>
+        </form>
       </div>
-
+      <div class="col-lg-6">
+        <form role="form" action="/winners" method="GET">
+          <button class="btn btn-success btn-lg">get Winners</button>
+        </form>
+      </div>
     </div>
+      <div class="col-lg-4">
+
+        <form role="form" action="/deleteAll" method="POST" onsubmit="return confirm('DO YOU REALLY WANT TO DELETE ALL OF DATA?????');">
+          <label style="font-weight: bold;">To confirm, type DELETE</label>
+          <input id="deleteAll" type="text"></input>
+          <button class="btn btn-danger btn-lg" id="deleteAllButton" disabled="disabled">DELETE ALL</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</div> <!-- end wrapper -->
 
 
 <script src="/js/delete.js"></script>
 <script src="/js/messageClear.js"></script>
-<script src="/js/deleteAll.js"></script>
 
-  </body>
+</body>
 
 </html>

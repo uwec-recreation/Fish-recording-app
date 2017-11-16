@@ -1,57 +1,42 @@
 {{> header}}
 
-  <script src="/js/libs/jquery-3.2.1.min.js"></script>
-  <script src="/js/fade.js"></script>
+    <script src="/js/fade.js"></script>
 
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Register</h3>
+                    {{#if register}}
+                    <label class="message" style="color:green">{{register}}</label>
+                    {{/if}}
+                    {{#if error}}
+                    <label class="message" style="color:red">{{error}}</label>
+                    {{/if}}
+                </div>
+                <div class="panel-body">
+                    <form role="form" action="/registerAdmin" method="POST">
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Username" name="username" type="text" required autofocus>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Password" name="password" type="password" required>
+                            </div>
+                            <div class="form-group">
+                              <div class="checkbox">
+                                <label><input type="checkbox" value="true" id="squaredThree" name="editor"/>Editor</label>
+                              </div>
+                            </div>
 
-    <div class="centered-form">
-      <div class="centered-form__form">
-        <form action="/registerAdmin" method="POST">
-
-          <div class="form-field">
-            <h3>Register</h3>
-          </div>
-
-          {{#if register}}
-          <label class="message" style="color:green">{{register}}</label>
-          {{/if}}
-          {{#if error}}
-          <label class="message" style="color:red">{{error}}</label>
-          {{/if}}
-
-          <div class="form-field">
-            <label>Username</label>
-            <input type="text" name="username" autocomplete="false" required autofocus/>
-          </div>
-
-          <div class="form-field">
-            <label>Password</label>
-            <input type="text" id="password" name="password" autocomplete="false" required/>
-          </div>
-
-          <div class="form-field"
-            <label>Editor</label>
-            <div class="squaredThree">
-              <input type="checkbox" value="true" id="squaredThree" name="editor"/>
-              <label for="squaredThree"></label>
+                            <button class="btn btn-lg btn-success btn-block">Register</button>
+                        </fieldset>
+                    </form>
+                </div>
             </div>
-          </div>
-
-          <!--
-          <div class="form-field">
-            <label>Retype Password</label>
-            <input type="password" id="password_confirm" name="password_confirm" required/>
-          </div>
-          -->
-
-          <div class="form-field">
-            <button type="submit" id="submit">Register</button>
-          </div>
-        </form>
-      </div>
+        </div>
     </div>
-
-    <script src="/js/libs/jquery-3.2.1.min.js"></script>
-    <script src="/js/passwordVerification.js"></script>
+  </div>
   </body>
+
 </html>

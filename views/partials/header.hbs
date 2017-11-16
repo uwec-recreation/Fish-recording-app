@@ -4,33 +4,124 @@
   <head>
     <meta charset="utf-8">
     <title>{{title}}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <link rel="stylesheet" href="/css/styles.css">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"> -->
+    <!-- <link rel="stylesheet" href="/css/styles.css"> -->
+    <!-- Bootstrap Core CSS -->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- DataTables CSS -->
+    <link href="/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+
+    <!-- DataTables Responsive CSS -->
+    <link href="/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+
+    <!-- Custom CSS  -->
+    <link href="/dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+
+    <script src="../vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="/vendor/metisMenu/metisMenu.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="/vendor/datatables-responsive/dataTables.responsive.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="/dist/js/sb-admin-2.js"></script>
+
   </head>
   <body>
-    <div class="navigation-bar">
-      <ul>
-        <li name="jigsUp"><a href="">JigsUp</a></li>
-        <li name="adminChat"><a href="">Admin Chat</a></li>
-        <li name="rules"><a href="">Rules</a></li>
+    <div id="wrapper">
+      <!-- Navigation -->
+      <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+          <div class="navbar-header">
+              <a class="navbar-brand" href="http://jigsup.org/" target="_blank">JigsUp</a>
+              {{#if username}}
+              {{#if editor}}
+                <a class="navbar-brand" href="https://agile-retreat-61315.herokuapp.com/chat.html?name={{username}}&room=JigsUp" target="_blank">Admin Chat</a>
+              {{/if}}
+              {{/if}}
+              <a class="navbar-brand" href="http://jigsup.org/assets/2018_Rules_of_the_Tournament.pdf" target="_blank">Rules</a>
+          </div>
+          <!-- /.navbar-header -->
+          <ul class="nav navbar-top-links navbar-right">
+              {{#if username}}
+              {{#if administration}}
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-wrench fa-fw"></i> <i class="fa fa-caret-down"></i>
+                </a>
 
-        {{#if username}}
-        <li style="float:right"><a href="/logout">Logout</a></li>
-        <li style="float:right"><a href="">{{username}}</a></li>
-        <li style="float:right"><a href="/list">List</a></li>
-        {{#if editor}}
-        <li style="float:right"><a href="/ticket">Ticket</a></li>
-        {{/if}}
-        {{#if administration}}
-        <li id="admin" style="float:right"><a href="/registerAdmin">Register</a></li>
-        <li id="admin" style="float:right"><a href="/editData">Edit Contestants</a></li>
-        <li id="admin" style="float:right"><a href="/editUsers">Edit User</a></li>
-        <li id="admin" style="float:right"><a href="/winners">Winners</a></li>
+                <ul class="dropdown-menu dropdown-user">
+                    <li><a href="/registerAdmin"><i class="fa  fa-fw"></i> Register</a>
+                    </li>
+                    <li><a href="/editData"><i class="fa  fa-fw"></i> Edit Contestants</a>
+                    </li>
+                    <li><a href="/editUsers"><i class="fa  fa-fw"></i> Edit user</a>
+                    </li>
+                    <li><a href="/winners"><i class="fa  fa-fw"></i> Winners</a>
+                    </li>
+                </ul>
 
-        {{/if}}
-        {{else}}
-        <li style="float:right"><a href="/register">Register</a></li>
-        <li style="float:right"><a href="/login">Login</a></li>
-        {{/if}}
-      </ul>
-    </div>
+                <!-- /.dropdown-user -->
+              </li>
+              <!-- /.dropdown -->
+              {{/if}}
+
+                <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                      <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                  </a>
+
+                  <ul class="dropdown-menu dropdown-user">
+                      <li><a href=""><i class="fa  fa-fw"></i> {{username}}</a>
+                      </li>
+                      <li class="divider"></li>
+                      <li><a href="/list"><i class="fa  fa-fw"></i> List</a>
+                      </li>
+                      {{#if editor}}
+                      <li><a href="/ticket"><i class = "fa fa-fw"></i> Ticket</a>
+                      </li>
+                      {{/if}}
+                      <li class="divider"></li>
+                      <li><a href="/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                      </li>
+                  </ul>
+
+                  <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+
+              {{else}}
+              <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                      <i class="fa fa-th-list fa-fw"></i> <i class="fa fa-caret-down"></i>
+                  </a>
+
+                  <ul class="dropdown-menu dropdown-user">
+                      <li><a href="/login"><i class="fa  fa-fw"></i> Login</a>
+                      </li>
+                      <li><a href="/register"><i class="fa  fa-fw"></i> Register</a>
+                      </li>
+                  </ul>
+
+                  <!-- /.dropdown-user -->
+              </li>
+              <!-- /.dropdown -->
+              {{/if}}
+          </ul>
+          <!-- /.navbar-top-links -->
+      </nav>
