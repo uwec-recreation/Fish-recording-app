@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 const hbs = require('hbs');
 const Moment = require('moment');
 const bcrypt = require('bcryptjs');
+var mongoXlsx = require('mongo-xlsx');
 const {ObjectID} = require('mongodb');
 
 var {mongoose} = require('./db/mongoose');
@@ -279,6 +280,27 @@ app.post('/deleteUser', admin, async (req, res) => {
     render.editUsers(req, res, {data}, {error: 'Something Went Wrong'});
   }
 });
+
+
+////////////CONVERT TO XLSX////////////
+
+app.post('/getXlsx', admin, async (req, res) => {
+
+
+  var list = await Contestant.find({}).sort({createdAt: -1});
+
+  var model = mongoXlsx.buildDynamicModel(list);
+
+  /* Generate Excel */
+  mongoXlsx.mongoData2Xlsx(list, model, function(err, data) {
+    console.log('File saved at:', data.fullPath); 
+  });  
+
+});
+
+
+
+
 
 
 /////////////////////////////////////////////////////////////////////
