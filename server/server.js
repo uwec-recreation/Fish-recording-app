@@ -9,6 +9,7 @@ const hbs = require('hbs');
 const Moment = require('moment');
 const bcrypt = require('bcryptjs');
 var mongoXlsx = require('mongo-xlsx');
+const fs = require('fs');
 const {ObjectID} = require('mongodb');
 
 var {mongoose} = require('./db/mongoose');
@@ -59,7 +60,7 @@ app.post('/ticket', editor, (req, res) => {
   contestant.save().then(() => {
     render.ticket(req, res, {confirmation: 'Angler Successfully Added'});
   }, (e) => {
-    render.ticket(req, res, {error:'you done goofed'});
+    render.ticket(req, res, {error:'Data you entered was incorrect or the Ticket Number is already in use'});
   });
 });
 
@@ -178,14 +179,35 @@ app.get('/editData', admin, async (req, res) => {
   northern = await Contestant.find({fish: 'Northern'});
   walleye = await Contestant.find({fish: 'Walleye'});
   bass = await Contestant.find({fish: 'Bass'});
-  panFish = await Contestant.find({fish: 'Pan Fish'});
-  render.editData(req, res, {data}, {total: data.length, northern: northern.length, walleye: walleye.length, bass: bass.length, panFish: panFish.length});
+  yellowPerch = await Contestant.find({fish: 'Yellow Perch'});
+  bluegill = await Contestant.find({fish: 'Bluegill'});
+  crappie = await Contestant.find({fish: 'Crappie'});
+  pumpkinseed = await Contestant.find({fish: 'Pumpkinseed'});
+  sunfish = await Contestant.find({fish: 'Sunfish'});
+
+  render.editData(req, res, {data}, {total: data.length, northern: northern.length, walleye: walleye.length,
+   bass: bass.length, yellowPerch: yellowPerch.length, bluegill: bluegill.length, crappie: crappie.length,
+    pumpkinseed: pumpkinseed.length, sunfish: sunfish.length});
 
 });
 
 app.post('/editData', admin, async (req, res) => {
 
   var body = _.pick(req.body, ['firstName', 'lastName', 'ticket', 'fish', 'weight']);
+
+  data = await Contestant.find({}).sort({createdAt: -1});
+  northern = await Contestant.find({fish: 'Northern'});
+  walleye = await Contestant.find({fish: 'Walleye'});
+  bass = await Contestant.find({fish: 'Bass'});
+  yellowPerch = await Contestant.find({fish: 'Yellow Perch'});
+  bluegill = await Contestant.find({fish: 'Bluegill'});
+  crappie = await Contestant.find({fish: 'Crappie'});
+  pumpkinseed = await Contestant.find({fish: 'Pumpkinseed'});
+  sunfish = await Contestant.find({fish: 'Sunfish'});
+
+  render.editData(req, res, {data}, {total: data.length, northern: northern.length, walleye: walleye.length,
+   bass: bass.length, yellowPerch: yellowPerch.length, bluegill: bluegill.length, crappie: crappie.length,
+    pumpkinseed: pumpkinseed.length, sunfish: sunfish.length});
 
   try {
     await Contestant.findOneAndUpdate({_id: req.body.id}, {$set: body}, {new: true});
@@ -194,8 +216,15 @@ app.post('/editData', admin, async (req, res) => {
     northern = await Contestant.find({fish: 'Northern'});
     walleye = await Contestant.find({fish: 'Walleye'});
     bass = await Contestant.find({fish: 'Bass'});
-    panFish = await Contestant.find({fish: 'Pan Fish'});
-    render.editData(req, res, {data}, {total: data.length, northern: northern.length, walleye: walleye.length, bass: bass.length, panFish: panFish.length, success: 'Data Successfully Updated'});
+    yellowPerch = await Contestant.find({fish: 'Yellow Perch'});
+    bluegill = await Contestant.find({fish: 'Bluegill'});
+    crappie = await Contestant.find({fish: 'Crappie'});
+    pumpkinseed = await Contestant.find({fish: 'Pumpkinseed'});
+    sunfish = await Contestant.find({fish: 'Sunfish'});
+
+    render.editData(req, res, {data}, {total: data.length, northern: northern.length, walleye: walleye.length,
+   bass: bass.length, yellowPerch: yellowPerch.length, bluegill: bluegill.length, crappie: crappie.length,
+    pumpkinseed: pumpkinseed.length, sunfish: sunfish.length, success: 'Data Successfully Updated'});
   }
   catch (e) {
 
@@ -203,8 +232,14 @@ app.post('/editData', admin, async (req, res) => {
     northern = await Contestant.find({fish: 'Northern'});
     walleye = await Contestant.find({fish: 'Walleye'});
     bass = await Contestant.find({fish: 'Bass'});
-    panFish = await Contestant.find({fish: 'Pan Fish'});
-    render.editData(req, res, {data}, {total: data.length, northern: northern.length, walleye: walleye.length, bass: bass.length, panFish: panFish.length,error: 'Something Went Wrong'});
+    yellowPerch = await Contestant.find({fish: 'Yellow Perch'});
+    bluegill = await Contestant.find({fish: 'Bluegill'});
+    crappie = await Contestant.find({fish: 'Crappie'});
+    pumpkinseed = await Contestant.find({fish: 'Pumpkinseed'});
+    sunfish = await Contestant.find({fish: 'Sunfish'});
+    render.editData(req, res, {data}, {total: data.length, northern: northern.length, walleye: walleye.length,
+   bass: bass.length, yellowPerch: yellowPerch.length, bluegill: bluegill.length, crappie: crappie.length,
+    pumpkinseed: pumpkinseed.length, sunfish: sunfish.length, error: 'Something Went Wrong'});
   }
 });
 
@@ -284,22 +319,41 @@ app.post('/deleteUser', admin, async (req, res) => {
 
 ////////////CONVERT TO XLSX////////////
 
-app.post('/getXlsx', admin, async (req, res) => {
+app.get('/getXlsx', admin, async (req, res) => {
 
 
   var list = await Contestant.find({}).sort({createdAt: -1});
+  var fileName;
 
-  var model = mongoXlsx.buildDynamicModel(list);
+  var model = await mongoXlsx.buildDynamicModel(list);
 
   /* Generate Excel */
-  mongoXlsx.mongoData2Xlsx(list, model, function(err, data) {
-    console.log('File saved at:', data.fullPath); 
+  var data = await mongoXlsx.mongoData2Xlsx(list, model, function(err, data) {
+     
+    console.log("downloading...");
+    res.download(data.fullPath, function(err) {
+      if(err) {
+        console.log("Download Error");
+        return err;
+      }
+        console.log("download complete");
+        fs.unlink(data.fullPath, function(err) {
+          if(err) {
+            consol.log("Remove Error");
+            return err;
+          }
+          console.log("removed old file");
+        });
+    });    
   });  
-
 });
 
 
+////////////CONVERT TO JSON////////////
 
+app.get('/getJSON', admin, async (req, res) => {
+  //NOT GOING TO DO
+});
 
 
 

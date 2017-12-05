@@ -1,4 +1,7 @@
 setTimeout(function() {
-  $("#error").html('').css('background-color', 'rgba(250, 250, 250, 0.9)');
-  $("#success").html('').css('background-color', 'rgba(250, 250, 250, 0.9)');
+  document.getElementById("error").remove();
+}, 3000);
+
+setTimeout(function() {
+  document.getElementById("success").remove();
 }, 3000);

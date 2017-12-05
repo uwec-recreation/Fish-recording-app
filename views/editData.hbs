@@ -2,20 +2,25 @@
 
 
 <script src="/js/libs/moment.js"></script>
+<script src="/js/libs/mongo-xlsx.js"></script>
 
 
 
 <div class="row">
   <div class="col-lg-10 text-center col-lg-offset-1">
     {{#if error}}
-    <div id="error" style="background-color: #d9534f">
-      {{error}}
+    <div class="panel panel-danger" id="error">
+      <div class="panel-heading">
+      <h3>{{error}}</h3>
+      </div>
     </div>
     {{else}}
     {{#if success}}
-    <div id="success" style="background-color: #66d63e">
-      {{success}}
-    </div>
+      <div class="panel panel-success" id="success">
+        <div class="panel-heading">
+          <h3>{{success}}</h3>
+        </div>
+      </div>
     {{else}}
     {{/if}}
     {{/if}}
@@ -62,16 +67,20 @@
                 <td><h4><input type="text" class="form-control" name="lastName" autocomplete="off" value={{lastName}}></h4></td>
                 <td>
                   <h4>
-                    <select name="fish">
+                    <select class="form-control" name="fish">
                       <option value="{{fish}}">{{fish}}</option>
                       <option value="Northern">Northern</option>
                       <option value="Walleye">Walleye</option>
                       <option value="Bass">Bass</option>
-                      <option value="Pan Fish">Pan Fish</option>
+                      <option value="Yellow Perch">Yellow Perch</option>
+                      <option value="Bluegill">Bluegill</option>
+                      <option value="Crappie">Crappie</option>
+                      <option value="Pumpkinseed">Pumpkinseed</option>
+                      <option value="Sunfish">Sunfish</option>
                     </select>
                   </h4>
                 </td>
-                <td><input type="text" class="form-control" name="weight" autocomplete="off" value={{weight}}></td>
+                <td><h4><input type="text" class="form-control" name="weight" autocomplete="off" value={{weight}}></h4></td>
                 <td>
                   <h4>
                     <script>
@@ -106,30 +115,36 @@
             <th>Northern</th>
             <th>Walleye</th>
             <th>Bass</th>
-            <th>Pan Fish</th>
+            <th>Yellow Perch</th>
+            <th>Bluegill</th>
+            <th>Crappie</th>
+            <th>Pumpkinseed</th>
+            <th>Sunfish</th>
           </tr>
           <tr>
             <td>{{total}}</td>
             <td>{{northern}}</td>
             <td>{{walleye}}</td>
             <td>{{bass}}</td>
-            <td>{{panFish}}</td>
+            <td>{{yellowPerch}}</td>
+            <td>{{bluegill}}</td>
+            <td>{{crappie}}</td>
+            <td>{{pumpkinseed}}</td>
+            <td>{{sunfish}}</td>
           </tr>
         </table>
 
         <div class="col-lg-6">
-          <div class="btn-group">
-            <div class="col-lg-6">
+          <!--   <div class="col-lg-6">
               <form role="form">
                 <button class="btn btn-primary btn-lg">get JSON</button>
               </form>
-            </div>
+            </div> -->
             <div class="col-lg-6">
-              <form role="form" action="/getXlsx" method="POST">
+              <form role="form" action="/getXlsx" method="GET">
                 <button class="btn btn-success btn-lg">get List</button>
               </form>
             </div>
-          </div>
         </div>
         <div class="col-lg-2 col-lg-offset-2 ">
           <form role="form" action="/deleteAll" method="POST" onsubmit="return confirm('DO YOU REALLY WANT TO DELETE ALL OF DATA?????');">
@@ -149,7 +164,7 @@
 
 
 <script src="/js/delete.js"></script>
-
+<script src="/js/download.js"></script>
 <script src="/js/deleteAll.js"></script>
 <script src="/js/messageClear.js"></script>
 
