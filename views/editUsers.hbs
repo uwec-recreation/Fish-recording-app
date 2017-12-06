@@ -3,6 +3,31 @@
 <link rel="stylesheet" href="/css/styles.css">
 <script src="/js/libs/moment.js"></script>
 
+
+
+    <div class="row">
+      <div class="col-lg-10 text-center col-lg-offset-1">
+        {{#if error}}
+        <div class="panel panel-danger" id="error">
+          <div class="panel-heading">
+          <h3>{{error}}</h3>
+          </div>
+        </div>
+        {{else}}
+        {{#if success}}
+          <div class="panel panel-success" id="success">
+            <div class="panel-heading">
+              <h3>{{success}}</h3>
+            </div>
+          </div>
+        {{else}}
+        {{/if}}
+        {{/if}}
+      </div>
+    </div>
+
+
+
     <!-- /.row -->
     <div class="row">
         <div class="col-lg-10 col-lg-offset-1">

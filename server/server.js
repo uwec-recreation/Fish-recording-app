@@ -194,21 +194,7 @@ app.get('/editData', admin, async (req, res) => {
 app.post('/editData', admin, async (req, res) => {
 
   var body = _.pick(req.body, ['firstName', 'lastName', 'ticket', 'fish', 'weight']);
-
-  data = await Contestant.find({}).sort({createdAt: -1});
-  northern = await Contestant.find({fish: 'Northern'});
-  walleye = await Contestant.find({fish: 'Walleye'});
-  bass = await Contestant.find({fish: 'Bass'});
-  yellowPerch = await Contestant.find({fish: 'Yellow Perch'});
-  bluegill = await Contestant.find({fish: 'Bluegill'});
-  crappie = await Contestant.find({fish: 'Crappie'});
-  pumpkinseed = await Contestant.find({fish: 'Pumpkinseed'});
-  sunfish = await Contestant.find({fish: 'Sunfish'});
-
-  render.editData(req, res, {data}, {total: data.length, northern: northern.length, walleye: walleye.length,
-   bass: bass.length, yellowPerch: yellowPerch.length, bluegill: bluegill.length, crappie: crappie.length,
-    pumpkinseed: pumpkinseed.length, sunfish: sunfish.length});
-
+  
   try {
     await Contestant.findOneAndUpdate({_id: req.body.id}, {$set: body}, {new: true});
 
