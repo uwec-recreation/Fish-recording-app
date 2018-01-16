@@ -148,7 +148,7 @@ app.get('/logout', authenticate, async (req, res) => {
 
 app.get('/list', authenticate, async (req, res) => {
 
-  data = await Contestant.find({}).sort({createdAt: -1});
+  data = await Contestant.find({}).limit(10).sort({createdAt: -1});
 
   render.list(req, res, {data});
 
