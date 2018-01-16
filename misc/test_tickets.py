@@ -74,7 +74,7 @@ def login_site(url, username, password):
     return res.status_code == 200 and 'Login Attempt Failed' not in res.text
 
 
-def add_ticket(number):
+def add_ticket(number, debug=False):
     global firstnames, lastnames, fish, seed
 
     test = seed + number
@@ -86,12 +86,14 @@ def add_ticket(number):
         'weight': '{}.{}'.format(randint(1, 20), randint(0, 9))
     }
 
-    #res = session.post('{}/ticket'.format(args.url), data=data)
     print('Test {}: {} {} - {} - {}'.format(test,
                                             data['firstName'],
                                             data['lastName'],
                                             data['fish'],
                                             data['weight']))
+
+    if not debug:
+        res = session.post('{}/ticket'.format(args.url), data=data)
 
 
 if __name__ == '__main__':
@@ -114,7 +116,7 @@ if __name__ == '__main__':
         print('Start.')
         for number in range(args.number):
             sleep(randint(0, args.sleep))
-            add_ticket(number)
+            add_ticket(number, args.debug)
         print('Done.')
 
     else:
