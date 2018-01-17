@@ -148,10 +148,19 @@ app.get('/logout', authenticate, async (req, res) => {
 
 app.get('/list', authenticate, async (req, res) => {
 
-  data = await Contestant.find({}).limit(10).sort({createdAt: -1});
+  data = await Contestant.find({}).limit(50).sort({createdAt: -1});
 
   render.list(req, res, {data});
 
+
+});
+
+app.post('/moreInfo', authenticate, async (req, res) => {
+  console.log("POST more info");
+  console.log("skipping:", req.get('skipValue'));
+  //data = await Contestant.find({}).skip(req.get('skipValue')).limit(50).sort({createdAt: -1});
+
+  //res.send(data);
 
 });
 
