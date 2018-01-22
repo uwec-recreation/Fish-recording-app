@@ -6,7 +6,7 @@ function ajaxCall(skip) {
 	return $.ajax({
 		dataType: "json",
 		async: true,
-		url: "/moreInfo/"+skip,
+		url: "/editData/moreInfo/"+skip,
 		method: 'PUT',
 		beforeSend: function() {
 			// showLoading(card);
@@ -24,15 +24,37 @@ function assembleTable(data) {
 	
 
 	data.forEach(function(item) {
+		var form = $("<form/>", {
+			name: item._id,
+			action: "/editData",
+			method: "POST",
+			onsubmit: "return confirm('Do you really want to Update/Delete?');"
+		});
 		var tableTR = $("<tr/>");
 		var html = '';
-		html += "<td><h4>"+item.firstName+"</h4></td>";
-		html += "<td><h4>"+item.lastName+"</h4></td>";
-		html += "<td><h4>"+item.fish+"</h4></td>";
-		html += "<td><h4>"+item.weight+"</h4></td>";
-		html += "<td><h4>"+moment(item.createdAt).format('h:mm:ss A')+"</h4></td>";
-		tableTR.append(html);
-		table.append(tableTR);
+		html += '<td style="display: none;"><input type="text" name="id" value="'+item._id+'" readonly></td>';
+		html += '<td><h4><input type="text" class="form-control" name="ticket" autocomplete="off" value="'+item.ticket+'"></h4></td>';
+		html += '<td><h4><input type="text" class="form-control" name="firstName" autocomplete="off" value="'+item.firstName+'"></h4></td>';
+		html += '<td><h4><input type="text" class="form-control" name="lastName" autocomplete="off" value="'+item.lastName+'"></h4></td>';
+		html += '<td><h4><select class="form-control" name="fish"';
+		html += '<option value="'+item.fish+'">'+item.fish+'</option>';
+		html += '<option value="Northern">Northern</option>';
+        html += '<option value="Walleye">Walleye</option>';
+        html += '<option value="Bass">Bass</option>';
+        html += '<option value="Yellow Perch">Yellow Perch</option>';
+        html += '<option value="Bluegill">Bluegill</option>';
+        html += '<option value="Crappie">Crappie</option>';
+        html += '<option value="Pumpkinseed">Pumpkinseed</option>';
+        html += '<option value="Sunfish">Sunfish</option>';
+		html += '</h4></td>';
+		html += '<td><h4><input type="text" class="form-control" name="weight" autocomplete="off" value="'+item.weight+'"></h4></td>';
+		html += '<td><h4>'+moment(item.createdAt).format('h:mm:ss A')+'</h4></td>';
+		html += '<td><button id="update" class="btn btn-primary btn-lg" type="submit">Update</button>',
+		'<button id="delete" class="btn btn-danger btn-lg" type="submit" formaction="/deleteTicket" style="display: none">Delete</button></td>';
+
+		// tableTR.append(html);
+		// form.append(tableTR);
+		// table.append(form);
 	});
 };
 

@@ -157,18 +157,13 @@ app.get('/list', authenticate, async (req, res) => {
 
 app.put('/moreInfo/:skip', authenticate, async (req, res) => {
   var skip = req.params.skip;
-  console.log("skipping:", skip);
   try {
-    console.log("Grabbing Data...");
-    data = await Contestant.find({}).skip(parseInt(skip)).limit(50).sort({createdAt: -1});
-    console.log("Size: ", data.length);
+    data = await Contestant.find({}).skip(parseInt(skip)).limit(50).sort({createdAt: -1});;
     res.send(data);
   } catch(e) {
     console.log(e);
     res.send(e);
   }
-
-
 });
 
 
@@ -192,7 +187,7 @@ app.put('/moreInfo/:skip', authenticate, async (req, res) => {
 
 app.get('/editData', admin, async (req, res) => {
 
-  data = await Contestant.find({}).sort({createdAt: -1});
+  data = await Contestant.find({}).limit(50).sort({createdAt: -1});
   northern = await Contestant.find({fish: 'Northern'});
   walleye = await Contestant.find({fish: 'Walleye'});
   bass = await Contestant.find({fish: 'Bass'});
@@ -215,7 +210,7 @@ app.post('/editData', admin, async (req, res) => {
   try {
     await Contestant.findOneAndUpdate({_id: req.body.id}, {$set: body}, {new: true});
 
-    data = await Contestant.find({}).sort({createdAt: -1});
+    data = await Contestant.find({}).limit(50).sort({createdAt: -1});
     northern = await Contestant.find({fish: 'Northern'});
     walleye = await Contestant.find({fish: 'Walleye'});
     bass = await Contestant.find({fish: 'Bass'});
@@ -231,7 +226,7 @@ app.post('/editData', admin, async (req, res) => {
   }
   catch (e) {
 
-    data = await Contestant.find({}).sort({createdAt: -1});
+    data = await Contestant.find({}).limit(50).sort({createdAt: -1});
     northern = await Contestant.find({fish: 'Northern'});
     walleye = await Contestant.find({fish: 'Walleye'});
     bass = await Contestant.find({fish: 'Bass'});
@@ -243,6 +238,17 @@ app.post('/editData', admin, async (req, res) => {
     render.editData(req, res, {data}, {total: data.length, northern: northern.length, walleye: walleye.length,
    bass: bass.length, yellowPerch: yellowPerch.length, bluegill: bluegill.length, crappie: crappie.length,
     pumpkinseed: pumpkinseed.length, sunfish: sunfish.length, error: 'Something Went Wrong'});
+  }
+});
+
+app.put('/editData/moreInfo/:skip', authenticate, async (req, res) => {
+  var skip = req.params.skip;
+  try {
+    data = await Contestant.find({}).skip(parseInt(skip)).limit(50).sort({createdAt: -1});;
+    res.send(data);
+  } catch(e) {
+    console.log(e);
+    res.send(e);
   }
 });
 
