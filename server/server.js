@@ -155,26 +155,34 @@ app.get('/list', authenticate, async (req, res) => {
 
 });
 
-app.post('/moreInfo', authenticate, async (req, res) => {
-  console.log("POST more info");
-  console.log("skipping:", req.get('skipValue'));
-  //data = await Contestant.find({}).skip(req.get('skipValue')).limit(50).sort({createdAt: -1});
-
-  //res.send(data);
-
-});
-
-
-////////////LIST////////////
-
-app.get('/winners', authenticate, async (req, res) => {
-
-  data = await Contestant.find({}).sort({weight: -1});
-
-  render.winners(req, res, {data});
+app.put('/moreInfo/:skip', authenticate, async (req, res) => {
+  var skip = req.params.skip;
+  console.log("skipping:", skip);
+  try {
+    console.log("Grabbing Data...");
+    data = await Contestant.find({}).skip(parseInt(skip)).limit(50).sort({createdAt: -1});
+    console.log("Size: ", data.length);
+    res.send(data);
+  } catch(e) {
+    console.log(e);
+    res.send(e);
+  }
 
 
 });
+
+
+// ////////////LIST////////////
+
+// app.get('/winners', authenticate, async (req, res) => {
+
+//   data = await Contestant.find({}).sort({weight: -1});
+
+//   render.winners(req, res, {data});
+
+
+// });
+
 
 
 
