@@ -259,10 +259,10 @@ app.post('/deleteTicket', admin, async (req, res) => {
     await Contestant.findOneAndRemove({_id: req.body.id});
 
 
-      data = await Contestant.find({});
+      data = await Contestant.find({}).limit(50).sort({createdAt: -1});
       render.editData(req, res, {data}, {success: 'Data Successfully Updated', total: data.length});
   } catch (e) {
-    data = await Contestant.find({});
+    data = await Contestant.find({}).limit(50).sort({createdAt: -1});
     render.editData(req, res, {data}, {error: 'Something Went Wrong', total: data.length});
   }
 
