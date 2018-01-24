@@ -148,24 +148,36 @@ app.get('/logout', authenticate, async (req, res) => {
 
 app.get('/list', authenticate, async (req, res) => {
 
-  data = await Contestant.find({}).sort({createdAt: -1});
+  data = await Contestant.find({}).limit(50).sort({createdAt: -1});
 
   render.list(req, res, {data});
 
 
 });
 
-
-////////////LIST////////////
-
-app.get('/winners', authenticate, async (req, res) => {
-
-  data = await Contestant.find({}).sort({weight: -1});
-
-  render.winners(req, res, {data});
-
-
+app.put('/moreInfo/:skip', authenticate, async (req, res) => {
+  var skip = req.params.skip;
+  try {
+    data = await Contestant.find({}).skip(parseInt(skip)).limit(50).sort({createdAt: -1});;
+    res.send(data);
+  } catch(e) {
+    console.log(e);
+    res.send(e);
+  }
 });
+
+
+// ////////////LIST////////////
+
+// app.get('/winners', authenticate, async (req, res) => {
+
+//   data = await Contestant.find({}).sort({weight: -1});
+
+//   render.winners(req, res, {data});
+
+
+// });
+
 
 
 
@@ -175,7 +187,7 @@ app.get('/winners', authenticate, async (req, res) => {
 
 app.get('/editData', admin, async (req, res) => {
 
-  data = await Contestant.find({}).sort({createdAt: -1});
+  data = await Contestant.find({}).limit(50).sort({createdAt: -1});
   northern = await Contestant.find({fish: 'Northern'});
   walleye = await Contestant.find({fish: 'Walleye'});
   bass = await Contestant.find({fish: 'Bass'});
@@ -198,7 +210,7 @@ app.post('/editData', admin, async (req, res) => {
   try {
     await Contestant.findOneAndUpdate({_id: req.body.id}, {$set: body}, {new: true});
 
-    data = await Contestant.find({}).sort({createdAt: -1});
+    data = await Contestant.find({}).limit(50).sort({createdAt: -1});
     northern = await Contestant.find({fish: 'Northern'});
     walleye = await Contestant.find({fish: 'Walleye'});
     bass = await Contestant.find({fish: 'Bass'});
@@ -214,7 +226,7 @@ app.post('/editData', admin, async (req, res) => {
   }
   catch (e) {
 
-    data = await Contestant.find({}).sort({createdAt: -1});
+    data = await Contestant.find({}).limit(50).sort({createdAt: -1});
     northern = await Contestant.find({fish: 'Northern'});
     walleye = await Contestant.find({fish: 'Walleye'});
     bass = await Contestant.find({fish: 'Bass'});
@@ -229,6 +241,17 @@ app.post('/editData', admin, async (req, res) => {
   }
 });
 
+app.put('/editData/moreInfo/:skip', authenticate, async (req, res) => {
+  var skip = req.params.skip;
+  try {
+    data = await Contestant.find({}).skip(parseInt(skip)).limit(50).sort({createdAt: -1});;
+    res.send(data);
+  } catch(e) {
+    console.log(e);
+    res.send(e);
+  }
+});
+
 
 app.post('/deleteTicket', admin, async (req, res) => {
 
@@ -236,10 +259,10 @@ app.post('/deleteTicket', admin, async (req, res) => {
     await Contestant.findOneAndRemove({_id: req.body.id});
 
 
-      data = await Contestant.find({});
+      data = await Contestant.find({}).limit(50).sort({createdAt: -1});
       render.editData(req, res, {data}, {success: 'Data Successfully Updated', total: data.length});
   } catch (e) {
-    data = await Contestant.find({});
+    data = await Contestant.find({}).limit(50).sort({createdAt: -1});
     render.editData(req, res, {data}, {error: 'Something Went Wrong', total: data.length});
   }
 

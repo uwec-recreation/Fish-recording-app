@@ -1,4 +1,15 @@
+var clickValue = false;
+
 $('#deleteCheck').click(function() {
-    $("*#delete").toggle(this.checked);
-    $("*#update").toggle(this.notChecked);
+    toggleButtons(this);
+    if(clickValue) {
+    	clickValue = false;
+    } else {
+    	clickValue = true;
+    }
 });
+
+function toggleButtons(toggle) {
+	$("*#delete").toggle(toggle.checked);
+    $("*#update").toggle(toggle.notChecked);
+}
