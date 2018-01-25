@@ -197,9 +197,11 @@ app.get('/editData', admin, async (req, res) => {
   pumpkinseed = await Contestant.find({fish: 'Pumpkinseed'});
   sunfish = await Contestant.find({fish: 'Sunfish'});
 
-  render.editData(req, res, {data}, {total: data.length, northern: northern.length, walleye: walleye.length,
+  var totalLength = northern.length + walleye.length + bass.length + yellowPerch.length + bluegill.length + crappie.length + pumpkinseed.length + sunfish.length;
+
+  render.editData(req, res, {data}, {total: totalLength, northern: northern.length, walleye: walleye.length,
    bass: bass.length, yellowPerch: yellowPerch.length, bluegill: bluegill.length, crappie: crappie.length,
-    pumpkinseed: pumpkinseed.length, sunfish: sunfish.length});
+   pumpkinseed: pumpkinseed.length, sunfish: sunfish.length});
 
 });
 
@@ -221,8 +223,8 @@ app.post('/editData', admin, async (req, res) => {
     sunfish = await Contestant.find({fish: 'Sunfish'});
 
     render.editData(req, res, {data}, {total: data.length, northern: northern.length, walleye: walleye.length,
-   bass: bass.length, yellowPerch: yellowPerch.length, bluegill: bluegill.length, crappie: crappie.length,
-    pumpkinseed: pumpkinseed.length, sunfish: sunfish.length, success: 'Data Successfully Updated'});
+     bass: bass.length, yellowPerch: yellowPerch.length, bluegill: bluegill.length, crappie: crappie.length,
+     pumpkinseed: pumpkinseed.length, sunfish: sunfish.length, success: 'Data Successfully Updated'});
   }
   catch (e) {
 
@@ -236,8 +238,8 @@ app.post('/editData', admin, async (req, res) => {
     pumpkinseed = await Contestant.find({fish: 'Pumpkinseed'});
     sunfish = await Contestant.find({fish: 'Sunfish'});
     render.editData(req, res, {data}, {total: data.length, northern: northern.length, walleye: walleye.length,
-   bass: bass.length, yellowPerch: yellowPerch.length, bluegill: bluegill.length, crappie: crappie.length,
-    pumpkinseed: pumpkinseed.length, sunfish: sunfish.length, error: 'Something Went Wrong'});
+     bass: bass.length, yellowPerch: yellowPerch.length, bluegill: bluegill.length, crappie: crappie.length,
+     pumpkinseed: pumpkinseed.length, sunfish: sunfish.length, error: 'Something Went Wrong'});
   }
 });
 
@@ -259,8 +261,8 @@ app.post('/deleteTicket', admin, async (req, res) => {
     await Contestant.findOneAndRemove({_id: req.body.id});
 
 
-      data = await Contestant.find({}).limit(50).sort({createdAt: -1});
-      render.editData(req, res, {data}, {success: 'Data Successfully Updated', total: data.length});
+    data = await Contestant.find({}).limit(50).sort({createdAt: -1});
+    render.editData(req, res, {data}, {success: 'Data Successfully Updated', total: data.length});
   } catch (e) {
     data = await Contestant.find({}).limit(50).sort({createdAt: -1});
     render.editData(req, res, {data}, {error: 'Something Went Wrong', total: data.length});
@@ -330,29 +332,33 @@ app.post('/deleteUser', admin, async (req, res) => {
 
 app.get('/getXlsx', admin, async (req, res) => {
 
-
   var list = await Contestant.find({}).sort({createdAt: -1});
-  var fileName;
+  var fileList = [];
 
-  var model = await mongoXlsx.buildDynamicModel(list);
+  for(var k in list) {
+    fileList[k] = ({"ticket": list[k].ticket, "firstName": list[k].firstName, "lastName": list[k].lastName, "fish": list[k].fish, "weight": list[k].weight, "TimeFormatted": Moment(list[k].createdAt).format("MMMM Do YYYY, h:mm:ss a")});
+  }
+
+
+  var model = await mongoXlsx.buildDynamicModel(fileList);
 
   /* Generate Excel */
-  var data = await mongoXlsx.mongoData2Xlsx(list, model, function(err, data) {
-     
+  var data = await mongoXlsx.mongoData2Xlsx(fileList, model, function(err, data) {
+   
     console.log("downloading...");
     res.download(data.fullPath, function(err) {
       if(err) {
         console.log("Download Error");
         return err;
       }
-        console.log("download complete");
-        fs.unlink(data.fullPath, function(err) {
-          if(err) {
-            consol.log("Remove Error");
-            return err;
-          }
-          console.log("removed old file");
-        });
+      console.log("download complete");
+      fs.unlink(data.fullPath, function(err) {
+        if(err) {
+          consol.log("Remove Error");
+          return err;
+        }
+        console.log("removed old file");
+      });
     });    
   });  
 });
