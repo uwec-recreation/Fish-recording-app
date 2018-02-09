@@ -151,11 +151,16 @@ app.get('/list', authenticate, async (req, res) => {
   data = await Contestant.find({}).limit(50).sort({createdAt: -1});
 
   render.list(req, res, {data});
-
-
 });
 
-app.put('/moreInfo/:skip', authenticate, async (req, res) => {
+app.get('/publicList', async (req, res) => {
+
+  data = await Contestant.find({}).limit(50).sort({createdAt: -1});
+
+  render.publicList(req, res, {data});
+});
+
+app.put('/moreInfo/:skip', async (req, res) => {
   var skip = req.params.skip;
   try {
     data = await Contestant.find({}).skip(parseInt(skip)).limit(50).sort({createdAt: -1});;
