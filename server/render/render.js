@@ -50,6 +50,15 @@ list = (req, res, info) => {
   res.render('list.hbs', data);
 };
 
+
+publicList = (req, res, info) => {
+  data = {
+    pageTitle: 'List | JigsUp',
+  };
+  _.merge(data, info);
+  res.render('publicList.hbs', data);
+};
+
 winners = (req, res, info) => {
   data = {
     pageTitle: 'Winners | JigsUp',
@@ -87,4 +96,4 @@ editUsers = (req, res, info, msg) => {
 };
 
 
-module.exports = {login, ticket, register, list, editData, editUsers, registerAdmin, winners};
+module.exports = {login, ticket, register, list, editData, editUsers, registerAdmin, winners, publicList};
