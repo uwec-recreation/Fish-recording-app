@@ -41,6 +41,7 @@
                               <th>Username</th>
                               <th>Admin</th>
                               <th>Editor</th>
+                              <th>Get Fish Entries</th>
                               <th>
                               <section title=".slideThree">
                                   <!-- .slideThree -->
@@ -70,6 +71,9 @@
                               {{else}}
                               <td><input type="checkbox" name="editor" value="true"></td>
                               {{/if}}
+                              <td>
+                                <a href="/retrieve/{{_id}}" class="btn btn-success">Retrieve</a>
+                              </td>
                               <td>
                                 <button id="update" class="btn btn-primary" type="submit">Update</button>
                                 <button id="delete" class="btn btn-danger" type="submit" formaction="/deleteUser" style="display: none">Delete</button>
