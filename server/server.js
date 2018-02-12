@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const hbs = require('hbs');
 const Moment = require('moment');
+// const MomentTZ = require('moment-timezone');
 const bcrypt = require('bcryptjs');
 var mongoXlsx = require('mongo-xlsx');
 const fs = require('fs');
@@ -170,7 +171,6 @@ app.put('/moreInfo/:skip', async (req, res) => {
     res.send(e);
   }
 });
-
 
 // ////////////LIST////////////
 
@@ -349,7 +349,7 @@ app.get('/getXlsx', admin, async (req, res) => {
 
   /* Generate Excel */
   var data = await mongoXlsx.mongoData2Xlsx(fileList, model, function(err, data) {
-   
+
     console.log("downloading...");
     res.download(data.fullPath, function(err) {
       if(err) {
@@ -367,6 +367,52 @@ app.get('/getXlsx', admin, async (req, res) => {
     });    
   });  
 });
+
+
+app.get("/retrieve/:id", admin, async (req, res) => {
+  var id = req.params.id;
+
+  if(!ObjectID.isValid(id)) {
+    return res.status(404).send();
+  }
+
+  var options = {new: true};
+  var search = {_creator: req.user._id}
+
+  try {
+    list = await Contestant.find(search)
+    var fileList = [];
+
+    for(var k in list) {
+      fileList[k] = ({"ticket": list[k].ticket, "firstName": list[k].firstName, "lastName": list[k].lastName, "fish": list[k].fish, "weight": list[k].weight, "TimeFormatted": Moment(list[k].createdAt).format("MMMM Do YYYY, h:mm:ss a")});
+    }
+  } catch(e) {
+    res.status(404).send(e)
+  }
+
+  var model = await mongoXlsx.buildDynamicModel(fileList);
+
+  /* Generate Excel */
+  var data = await mongoXlsx.mongoData2Xlsx(fileList, model, function(err, data) {
+
+    console.log("downloading...");
+    res.download(data.fullPath, function(err) {
+      if(err) {
+        console.log("Download Error");
+        return err;
+      }
+      console.log("download complete");
+      fs.unlink(data.fullPath, function(err) {
+        if(err) {
+          consol.log("Remove Error");
+          return err;
+        }
+        console.log("removed old file");
+      });
+    });    
+  });  
+});
+
 
 
 ////////////CONVERT TO JSON////////////
