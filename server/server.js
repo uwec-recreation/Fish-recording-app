@@ -377,7 +377,7 @@ app.get("/retrieve/:id", admin, async (req, res) => {
   }
 
   var options = {new: true};
-  var search = {_creator: req.user._id}
+  var search = {_creator: id}
 
   try {
     list = await Contestant.find(search)
