@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const hbs = require('hbs');
 const Moment = require('moment');
-// const MomentTZ = require('moment-timezone');
+const MomentTZ = require('moment-timezone');
 const bcrypt = require('bcryptjs');
 var mongoXlsx = require('mongo-xlsx');
 const fs = require('fs');
@@ -341,7 +341,7 @@ app.get('/getXlsx', admin, async (req, res) => {
   var fileList = [];
 
   for(var k in list) {
-    fileList[k] = ({"ticket": list[k].ticket, "firstName": list[k].firstName, "lastName": list[k].lastName, "fish": list[k].fish, "weight": list[k].weight, "RegisterTime": Moment(list[k].createdAt).format('h:mm:ss A')});
+    fileList[k] = ({"ticket": list[k].ticket, "firstName": list[k].firstName, "lastName": list[k].lastName, "fish": list[k].fish, "weight": list[k].weight, "RegisterTime": Moment(list[k].createdAt).tz('America/Chicago').format('h:mm:ss A')});
   }
 
 

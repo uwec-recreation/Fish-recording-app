@@ -21,7 +21,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Test jigsup site')
 
     parser.add_argument('-U', '--url', type=str, nargs='?',
-                        default='https://jigsup-entry.herokuapp.com',
+                        default='http://localhost:3000',
                         help='site url')
     parser.add_argument('-n', '--number', type=int, nargs='?',
                         default=5,
