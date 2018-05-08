@@ -83,11 +83,15 @@ app.post('/login', async (req, res) => {
   try {
     const body = _.pick(req.body, ['username', 'password']);
     body.username = body.username.toLowerCase();
+    console.log(body);
     const user = await User.findByCredentials(body.username, body.password);
     const token = await user.generateAuthToken();
+    console.log('token made');
     await res.cookie('x-auth', token);
+    console.log('cookies set');
     res.redirect('/list');
   } catch (e) {
+    console.log(e);
     render.login(req, res, {error:'Login Attempt Failed'});
   }
 });
@@ -215,7 +219,7 @@ app.get('/editData', admin, async (req, res) => {
 app.post('/editData', admin, async (req, res) => {
 
   var body = _.pick(req.body, ['firstName', 'lastName', 'phoneNumber', 'ticket', 'fish', 'weight']);
-  
+
   try {
     await Contestant.findOneAndUpdate({_id: req.body.id}, {$set: body}, {new: true});
 
@@ -366,8 +370,8 @@ app.get('/getXlsx', admin, async (req, res) => {
         }
         console.log("removed old file");
       });
-    });    
-  });  
+    });
+  });
 });
 
 
@@ -411,8 +415,8 @@ app.get("/retrieve/:id", admin, async (req, res) => {
         }
         console.log("removed old file");
       });
-    });    
-  });  
+    });
+  });
 });
 
 
