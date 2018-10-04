@@ -106,7 +106,7 @@ app.post('/register', async (req,res) => {
     const body = await _.pick(req.body, ['username', 'password']);
     body.username = body.username.toLowerCase();
     const user = await new User(body);
-    await user.save().then();
+    await user.save();
     render.register(req, res, {register: 'Registration Successful'});
   } catch (e) {
     render.register(req, res, {error: 'Registration Failed'});
