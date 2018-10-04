@@ -279,7 +279,7 @@ app.post('/deleteTicket', admin, async (req, res) => {
 
 app.post('/deleteAll', admin, async (req, res) => {
   try {
-    await Contestant.remove({});
+    await Contestant.deleteMany({});
     data = await Contestant.find({});
     render.editData(req, res, {data}, {success: 'All Has Successfully Been Removed', total: data.length});
   }
