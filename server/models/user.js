@@ -11,10 +11,10 @@ var UserSchema = new mongoose.Schema( {
       minlength: 1,
       trim: true,
       unique: true,
-      validate: {
-        validator: validator.isAlphanumeric,
-        message: '{VALUE} is not a valid username'
-      }
+      // validate: {
+      //   validator: validator.isAlphanumeric,
+      //   message: '{VALUE} is not a valid username'
+      // }  // this code is temporarily broken
   },
   password: {
     type: String,

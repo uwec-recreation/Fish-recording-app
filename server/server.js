@@ -106,7 +106,7 @@ app.post('/register', async (req,res) => {
     const body = await _.pick(req.body, ['username', 'password']);
     body.username = body.username.toLowerCase();
     const user = await new User(body);
-    await user.save();
+    await user.save().then().catch(e => console.log(e));
     render.register(req, res, {register: 'Registration Successful'});
   } catch (e) {
     render.register(req, res, {error: 'Registration Failed'});
@@ -279,7 +279,7 @@ app.post('/deleteTicket', admin, async (req, res) => {
 
 app.post('/deleteAll', admin, async (req, res) => {
   try {
-    await Contestant.remove({});
+    await Contestant.deleteMany({});
     data = await Contestant.find({});
     render.editData(req, res, {data}, {success: 'All Has Successfully Been Removed', total: data.length});
   }
