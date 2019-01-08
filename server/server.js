@@ -17,6 +17,7 @@ var {mongoose} = require('./db/mongoose');
 var {Contestant} = require('./models/contestant');
 var {User} = require('./models/user');
 var {authenticate, getUser, admin, editor} = require('./middleware/authenticate');
+var { cors } = require('./middleware/cors');
 var render = require('./render/render');
 
 const publicPath = path.join(__dirname, '../public');
@@ -163,7 +164,7 @@ app.get('/publicList', async (req, res) => {
   render.publicList(req, res, {data});
 });
 
-app.put('/moreInfo/:skip', async (req, res) => {
+app.put('/moreInfo/:skip', cors, async (req, res) => {
   var skip = req.params.skip;
   try {
     data = await Contestant.find({}).skip(parseInt(skip)).limit(50).sort({createdAt: -1});;
