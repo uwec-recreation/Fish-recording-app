@@ -52,7 +52,6 @@ app.post('/ticket', editor, (req, res) => {
   var contestant = new Contestant({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
-    phoneNumber: req.body.phoneNumber,
     ticket: parseInt(req.body.ticketNumber, 10),
     fish: req.body.fish,
     weight: req.body.weight,
@@ -214,7 +213,7 @@ app.get('/editData', admin, async (req, res) => {
 
 app.post('/editData', admin, async (req, res) => {
 
-  var body = _.pick(req.body, ['firstName', 'lastName', 'phoneNumber', 'ticket', 'fish', 'weight']);
+  var body = _.pick(req.body, ['firstName', 'lastName', 'ticket', 'fish', 'weight']);
   
   try {
     await Contestant.findOneAndUpdate({_id: req.body.id}, {$set: body}, {new: true});
@@ -343,7 +342,7 @@ app.get('/getXlsx', admin, async (req, res) => {
   var fileList = [];
 
   for(var k in list) {
-    fileList[k] = ({"ticket": list[k].ticket, "firstName": list[k].firstName, "lastName": list[k].lastName, "phoneNumber": list[k].phoneNumber, "fish": list[k].fish, "weight": list[k].weight, "RegisterTime": Moment(list[k].createdAt).tz('America/Chicago').format('h:mm:ss A')});
+    fileList[k] = ({"ticket": list[k].ticket, "firstName": list[k].firstName, "lastName": list[k].lastName, "fish": list[k].fish, "weight": list[k].weight, "RegisterTime": Moment(list[k].createdAt).tz('America/Chicago').format('h:mm:ss A')});
   }
 
 
@@ -386,7 +385,7 @@ app.get("/retrieve/:id", admin, async (req, res) => {
     var fileList = [];
 
     for(var k in list) {
-      fileList[k] = ({"ticket": list[k].ticket, "firstName": list[k].firstName, "lastName": list[k].lastName, "phoneNumber": list[k].phoneNumber, "fish": list[k].fish, "weight": list[k].weight, "TimeFormatted": Moment(list[k].createdAt).tz('America/Chicago').format("MMMM Do YYYY, h:mm:ss a")});
+      fileList[k] = ({"ticket": list[k].ticket, "firstName": list[k].firstName, "lastName": list[k].lastName, "fish": list[k].fish, "weight": list[k].weight, "TimeFormatted": Moment(list[k].createdAt).tz('America/Chicago').format("MMMM Do YYYY, h:mm:ss a")});
     }
   } catch(e) {
     res.status(404).send(e)

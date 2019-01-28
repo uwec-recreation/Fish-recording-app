@@ -16,10 +16,6 @@ var ContestantSchema = new mongoose.Schema( {
     minlength: 1,
     trim: true
   },
-  phoneNumber: {
-    type: String,
-    required: true
-  },
   ticket: {
     type: Number,
     required: true,

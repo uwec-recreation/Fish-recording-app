@@ -37,7 +37,6 @@ function assembleTable(data) {
 		html += '<td><h4><input form="'+item._id+'" type="text" class="form-control" name="ticket" autocomplete="off" value="'+item.ticket+'"></h4></td>';
 		html += '<td><h4><input type="text" form="'+item._id+'" class="form-control" name="firstName" autocomplete="off" value="'+item.firstName+'"></h4></td>';
 		html += '<td><h4><input type="text" form="'+item._id+'" class="form-control" name="lastName" autocomplete="off" value="'+item.lastName+'"></h4></td>';
-		html += '<td><h4><input type="text" form="'+item._id+'" class="form-control" name="phoneNumber" autocomplete="off" value="'+item.phoneNumber+'"></h4></td>';
 		html += '<td><h4><select form="'+item._id+'" class="form-control" name="fish"';
 		html += '<option value="'+item.fish+'">'+item.fish+'</option>';
 		html += '<option value="Northern">Northern</option>';
