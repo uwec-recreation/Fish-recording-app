@@ -214,7 +214,7 @@ app.get('/editData', admin, async (req, res) => {
 app.post('/editData', admin, async (req, res) => {
 
   var body = _.pick(req.body, ['firstName', 'lastName', 'ticket', 'fish', 'weight']);
-  
+
   try {
     await Contestant.findOneAndUpdate({_id: req.body.id}, {$set: body}, {new: true});
 
@@ -365,8 +365,8 @@ app.get('/getXlsx', admin, async (req, res) => {
         }
         console.log("removed old file");
       });
-    });    
-  });  
+    });
+  });
 });
 
 
@@ -385,7 +385,7 @@ app.get("/retrieve/:id", admin, async (req, res) => {
     var fileList = [];
 
     for(var k in list) {
-      fileList[k] = ({"ticket": list[k].ticket, "firstName": list[k].firstName, "lastName": list[k].lastName, "fish": list[k].fish, "weight": list[k].weight, "TimeFormatted": Moment(list[k].createdAt).tz('America/Chicago').format("MMMM Do YYYY, h:mm:ss a")});
+      fileList[k] = ({"ticket": list[k].ticket, "firstName": list[k].firstName, "lastName": list[k].lastName, "fish": list[k].fish, "weight": list[k].weight, "TimeFormatted": Moment(list[k].createdAt).tz('America/Chicago').format("MMMM Do YYYY, h:mm:ss a"), "Location": list[k]._creator});
     }
   } catch(e) {
     res.status(404).send(e)
@@ -410,8 +410,8 @@ app.get("/retrieve/:id", admin, async (req, res) => {
         }
         console.log("removed old file");
       });
-    });    
-  });  
+    });
+  });
 });
 
 
