@@ -342,7 +342,7 @@ app.get('/getXlsx', admin, async (req, res) => {
   var fileList = [];
 
   for(var k in list) {
-    fileList[k] = ({"ticket": list[k].ticket, "firstName": list[k].firstName, "lastName": list[k].lastName, "fish": list[k].fish, "weight": list[k].weight, "RegisterTime": Moment(list[k].createdAt).tz('America/Chicago').format('h:mm:ss A')});
+    fileList[k] = ({"ticket": list[k].ticket, "firstName": list[k].firstName, "lastName": list[k].lastName, "fish": list[k].fish, "weight": list[k].weight, "RegisterTime": Moment(list[k].createdAt).tz('America/Chicago').format('h:mm:ss A'), "Location": list[k]._creator});
   }
 
 
@@ -385,7 +385,7 @@ app.get("/retrieve/:id", admin, async (req, res) => {
     var fileList = [];
 
     for(var k in list) {
-      fileList[k] = ({"ticket": list[k].ticket, "firstName": list[k].firstName, "lastName": list[k].lastName, "fish": list[k].fish, "weight": list[k].weight, "TimeFormatted": Moment(list[k].createdAt).tz('America/Chicago').format("MMMM Do YYYY, h:mm:ss a"), "Location": list[k]._creator});
+      fileList[k] = ({"ticket": list[k].ticket, "firstName": list[k].firstName, "lastName": list[k].lastName, "fish": list[k].fish, "weight": list[k].weight, "TimeFormatted": Moment(list[k].createdAt).tz('America/Chicago').format("MMMM Do YYYY, h:mm:ss a")});
     }
   } catch(e) {
     res.status(404).send(e)
