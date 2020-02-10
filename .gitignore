@@ -4,3 +4,4 @@ runDB.bat
 DBstart.bat
 node_modules/
 .DS_Store/
+.vscode

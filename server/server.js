@@ -338,11 +338,11 @@ app.post('/deleteUser', admin, async (req, res) => {
 
 app.get('/getXlsx', admin, async (req, res) => {
 
-  var list = await Contestant.find({}).sort({createdAt: -1});
+  var list = await Contestant.find({}).populate("_creator").sort({createdAt: -1});
   var fileList = [];
 
   for(var k in list) {
-    fileList[k] = ({"ticket": list[k].ticket, "firstName": list[k].firstName, "lastName": list[k].lastName, "fish": list[k].fish, "weight": list[k].weight, "RegisterTime": Moment(list[k].createdAt).tz('America/Chicago').format('h:mm:ss A'), "Location": list[k]._creator});
+    fileList[k] = ({"ticket": list[k].ticket, "firstName": list[k].firstName, "lastName": list[k].lastName, "fish": list[k].fish, "weight": list[k].weight, "RegisterTime": Moment(list[k].createdAt).tz('America/Chicago').format('h:mm:ss A'), "Location": list[k]._creator.username});
   }
 
 
