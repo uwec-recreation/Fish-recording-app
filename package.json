@@ -23,7 +23,7 @@
     "jquery.inputmask": "^3.3.4",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "moment-timezone": "^0.5.27",
     "mongo-xlsx": "^1.0.12",
     "mongodb": "^3.5.2",
